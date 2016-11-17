@@ -13,5 +13,6 @@ private:
     unsigned lineNO;
     unsigned currIn;
     static unsigned lineAmnt;
-}; typedef Line* LPTR;
+  };
+  typedef Line* LPTR;
 #endif // LINE_H

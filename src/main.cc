@@ -1,9 +1,12 @@
 #include <iostream>
+#include "Editor.h"
+#include "LineMan.h"
 #include "Document.h"
 
 int main (int argc, char* argv[]) {
-  Document* doc = new Document;
-  doc->LoadDocument("~/Documents/Editor/test/docs/helloworld.cc");
-
+  Editor* ed = new Editor("helloworld.cc");
+  ed->Display();
+  //LineMan* lm = new LineMan;
+  //lm->Display();
   return 1;
 }

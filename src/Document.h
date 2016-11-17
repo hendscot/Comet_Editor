@@ -6,9 +6,9 @@ public:
   Document  ();
   ~Document ();
   void LoadDocument(const char*);
+  char* buffer;
 
 private:
-  char* buffer;
   FileHandler* FH;
 
 };

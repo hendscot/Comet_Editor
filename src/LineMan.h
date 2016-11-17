@@ -2,6 +2,7 @@
 #define LINEMAN_H
 class Line;
 class LineMan {
+  typedef Line* LPTR;
 public:
      LineMan();
     ~LineMan();

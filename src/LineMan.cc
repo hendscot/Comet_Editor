@@ -30,6 +30,7 @@ void LineMan::Newline () {
 
 void LineMan::Append (char ch) {
     LPTR iter = l_strt;
+    if (ch == '\0') { Newline(); iter->chr[iter->currIn] = ch; return;} // TODO handle newline char better
     while (Full(iter)) {
         if (iter->next && iter->next != l_strt)
             iter = iter->next;
@@ -61,7 +62,7 @@ void LineMan::Display () {
         }
         std::cout << std::endl;
         iter = iter->next;
-    } while (iter != l_strt);
+    } while (iter != l_strt && iter != NULL);
 }
 
 bool LineMan::Full(LPTR ln) {
