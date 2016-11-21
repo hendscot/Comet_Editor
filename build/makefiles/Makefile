@@ -3,11 +3,12 @@ SRC = ../../src/
 UTILS = ../../utils/
 OBJ = ../objects/
 EXE = ../executables/
+LINK = -lncurses
 
 all: main
 
 main: FileHandler.o LineMan.o Line.o Document.o Editor.o main.o
-	$(GCC) -o $(EXE)main $(OBJ)FileHandler.o $(OBJ)LineMan.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)Editor.o $(OBJ)main.o
+	$(GCC) -o $(EXE)main $(OBJ)FileHandler.o $(OBJ)LineMan.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
 
 FileHandler.o: $(UTILS)FileHandler.cc $(UTILS)FileHandler.h
 	$(GCC) -c -o $(OBJ)FileHandler.o $(UTILS)FileHandler.cc
