@@ -30,7 +30,7 @@ void LineMan::Newline () {
 
 void LineMan::Append (char ch) {
     LPTR iter = l_strt;
-    if (ch == '\0') { Newline(); iter->chr[iter->currIn] = ch; return;} // TODO handle newline char better
+    if (ch == '\n') { Newline(); iter->currIn = CHMAX; return;} // TODO handle newline char better
     while (Full(iter)) {
         if (iter->next && iter->next != l_strt)
             iter = iter->next;

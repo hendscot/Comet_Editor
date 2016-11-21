@@ -10,6 +10,8 @@ public:
   ~FileHandler ();
   char* Read   (const char*);
 
+  unsigned GetLength();
+
 private:
   FILE* FH_doc;
   unsigned FH_docLen;

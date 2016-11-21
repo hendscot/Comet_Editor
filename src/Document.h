@@ -8,8 +8,11 @@ public:
   void LoadDocument(const char*);
   char* buffer;
 
+  unsigned GetSize();
+
 private:
   FileHandler* FH;
+  unsigned bufSize;
 
 };
 

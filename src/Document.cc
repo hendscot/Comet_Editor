@@ -12,4 +12,9 @@ Document::~Document() {
 
 void Document::LoadDocument(const char* path) {
   buffer = FH->Read(path);
+  bufSize = FH->GetLength();
+}
+
+unsigned Document::GetSize(){
+  return bufSize;
 }

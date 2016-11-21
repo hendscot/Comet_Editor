@@ -11,7 +11,7 @@ FileHandler::~FileHandler() {
 
 char* FileHandler::Read (const char* path) {
   FH_doc = fopen (path, "rt");
-  if (FH_doc == NULL) perror("BURR"); // TODO handle if file not opened
+  if (FH_doc == NULL) perror("ERROR"); // TODO handle if file not opened
   fseek (FH_doc, 0, SEEK_END);
   FH_docLen = ftell (FH_doc);
   rewind (FH_doc);
@@ -20,4 +20,8 @@ char* FileHandler::Read (const char* path) {
   fread (buffer, 1, FH_docLen, FH_doc); // TODO store return code in var
   fclose(FH_doc);
   return buffer;
+}
+
+unsigned FileHandler::GetLength(){
+  return this->FH_docLen;
 }
