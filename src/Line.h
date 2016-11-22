@@ -5,7 +5,9 @@ class Line {
 friend class LineMan;
 public:
     Line();
+    Line(const Line&);
     ~Line();
+
 private:
     Line* next;
     Line* prev;
