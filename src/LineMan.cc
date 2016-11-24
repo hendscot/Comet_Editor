@@ -28,9 +28,21 @@ void LineMan::Newline () {
     }
 }
 
+void LineMan::Insert(int in, int ln) {
+  LPTR iter = (l_strt + (ln - 1));
+  if (Full(iter)) {
+    char save = iter->chr[]
+    iter->ShiftRight();
+  }
+}
+
 void LineMan::Append (char ch) {
     LPTR iter = l_strt;
-    if (ch == '\n') { Newline(); iter->currIn = CHMAX; return;} // TODO handle newline char better
+    if (ch == '\n') {
+      Newline();
+      iter->currIn = CHMAX;
+      return;
+    } // TODO handle newline char better
     while (Full(iter)) {
         if (iter->next && iter->next != l_strt)
             iter = iter->next;
@@ -54,15 +66,18 @@ void LineMan::Delete(int LN, int index) {
 }
 
 void LineMan::Display () {
-    LPTR iter = l_strt;
-    do {
-        std::cout << iter->lineNO << " ";
-        for (int i = 0; i < CHMAX; i++) {
-            std::cout << iter->chr[i];
-        }
-        std::cout << std::endl;
-        iter = iter->next;
-    } while (iter != l_strt && iter != NULL);
+
+    if (l_strt){
+      LPTR iter = l_strt;
+      do {
+          std::cout << iter->lineNO << " ";
+          for (int i = 0; i < CHMAX; i++) {
+              std::cout << iter->chr[i];
+          }
+          std::cout << std::endl;
+          iter = iter->next;
+      } while (iter != l_strt && iter != NULL);
+    }
 }
 
 bool LineMan::Full(LPTR ln) {

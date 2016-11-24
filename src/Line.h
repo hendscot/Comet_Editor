@@ -12,6 +12,7 @@ private:
     char  chr[CHMAX];
     unsigned lineNO;
     unsigned currIn;
+    unsigned size;
     static unsigned lineAmnt;
   };
   typedef Line* LPTR;

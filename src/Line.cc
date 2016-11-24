@@ -10,6 +10,7 @@ Line::Line() {
     ++lineAmnt;
     lineNO = lineAmnt;
     currIn = 0;
+    size = 0;
     for (int i = 0; i < CHMAX; i++) {
         chr[i] = '\0';
     }
