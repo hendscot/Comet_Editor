@@ -38,11 +38,6 @@ void LineMan::Insert(int in, int ln) {
 
 void LineMan::Append (char ch) {
     LPTR iter = l_strt;
-    if (ch == '\n') {
-      Newline();
-      iter->currIn = CHMAX;
-      return;
-    } // TODO handle newline char better
     while (Full(iter)) {
         if (iter->next && iter->next != l_strt)
             iter = iter->next;
@@ -52,7 +47,7 @@ void LineMan::Append (char ch) {
         }
     }
     iter->chr[iter->currIn] = ch;
-    iter->currIn++;
+    if (ch != '\n') iter->currIn++;
 }
 
 void LineMan::Delete(int LN, int index) {
@@ -81,7 +76,7 @@ void LineMan::Display () {
 }
 
 bool LineMan::Full(LPTR ln) {
-    if (ln->currIn >= CHMAX)
+    if (ln->currIn >= CHMAX || ln->chr[ln->currIn] == '\n')
         return true;
     else
         return false;

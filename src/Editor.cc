@@ -14,7 +14,7 @@ Editor::~Editor() {
 }
 
 void Editor::LoadFile() {
-  e_doc->LoadDocument("/home/hendscot/Documents/Editor/src/test.txt");
+  e_doc->LoadDocument("/home/scotth3n/ClionProjects/Comet_Editor/Comet_Editor/src/test.txt");
   int length = e_doc->GetSize();
   for (int i = 0; i < length; i++){
     e_man->Append(e_doc->buffer[i]);
