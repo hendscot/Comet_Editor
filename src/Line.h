@@ -1,6 +1,7 @@
 #ifndef LINE_H
 #define LINE_H
-const int CHMAX = 80;
+#include "String.h"
+const int STR_SIZE = 80;
 class Line {
 friend class LineMan;
 public:
@@ -9,12 +10,13 @@ public:
     ~Line();
 
 private:
-    Line* next;
-    Line* prev;
-    char  chr[CHMAX];
-    unsigned lineNO;
-    unsigned currIn;
-    unsigned size;
+    Line*           next;
+    Line*           prev;
+    Comet::String*  str;
+	bool            newL;
+    unsigned        lineNO;
+    unsigned        currIn;
+    unsigned        size;
     static unsigned lineAmnt;
   };
   typedef Line* LPTR;

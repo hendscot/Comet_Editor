@@ -9,6 +9,7 @@ public:
     void Append(char);
     void Display();
     void Delete(int, int);
+	void Insert(int, int, char);
 private:
     LPTR l_strt;
     LPTR l_end;

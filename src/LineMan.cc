@@ -4,74 +4,67 @@
 #include "LineMan.h"
 
 LineMan::LineMan() {
-    l_strt = NULL;
-    l_end = NULL;
-    Newline(); // assume 1 line default
+	l_strt = NULL;
+	l_end = NULL;
+	Newline(); // assume 1 line default
 }
 
 LineMan::~LineMan() {
 
 }
 
-void LineMan::Newline () {
-    LPTR newL = new Line;
-    if (NoLines()) {
-        l_strt = l_end = newL;
-    }
-    else {
-        LPTR iter = l_end;
-        l_end = newL;
-        iter->next = l_end;
-        l_end->prev = iter;
-        l_end->next = l_strt;
-        l_strt->prev = l_end;
-    }
+void LineMan::Newline() {
+	LPTR newL = new Line;
+	if (NoLines()) {
+		l_strt = l_end = newL;
+		l_strt->next = l_end;
+	}
+	else {
+		LPTR iter = l_end;
+		l_end = newL;
+		iter->next = l_end;
+		l_end->prev = iter;
+		l_end->next = l_strt;
+		l_strt->prev = l_end;
+	}
 }
 
-void LineMan::Insert(char ch, int in, int ln) {
-  bool full = true;
-  LPTR iter = (l_strt + (ln - 1));
-  if (Full(iter)) {
-    char save = iter->chr[iter->currIn];
-    iter->ShiftRight();
-    iter->chr[in] = ch;
-    while (full){
-      if (iter->next != l_strt){
-        if (iter->currIn >= CHMAX) {
-          
-        }
-      }
-      else {
-        Newline();
-        full = false;
-      }
-    }
-  }
+void LineMan::Insert(int ln, int in, char ch) {
+	LPTR iter = l_strt;
+	for (int i = 0; i < ln && iter->next != l_strt; iter = iter->next, i++);
+	if (ch != '\n' && iter->str[in] == '\n') {
+		iter->str->Insert(in, ch);
+		iter->newL = false;
+	}
+	else if (ch == '\n') {
+		iter->str->Insert(in, ch);
+		iter->newL = true;
+	}
+	else {
+		iter->str->Insert(in, ch);
+	}
 }
 
-void LineMan::Append (char ch) {
-    LPTR iter = l_strt;
-    while (Full(iter)) {
-        if (iter->next && iter->next != l_strt)
-            iter = iter->next;
-        else {
-            Newline();
-            iter = iter->next;
-        }
-    }
-    iter->chr[iter->currIn] = ch;
-    if (ch != '\n') iter->currIn++;
-    // ++iter->size;
+void LineMan::Append(char ch) {
+	LPTR iter = l_strt;
+	while (iter->next != l_strt && iter->newL) {
+		iter = iter->next;
+	}
+	if (iter->newL) {
+		Newline();
+		iter = iter->next; 
+	}
+	iter->str->Insert(iter->currIn, ch);
+	if (ch == '\n')
+		iter->newL = true;
+	++iter->currIn;
+	
 }
 
 void LineMan::Delete(int LN, int index) {
     LPTR iter = l_strt;
-    if (index >= (CHMAX-1)) {
-        for (int i = 1; i <= LN; i++) {
-            iter = iter->next;
-        }
-        iter->chr[CHMAX-1] = '\0';
-    }
+	for (int i = 0; i < LN && iter->next != l_strt; i++, iter = iter->next);
+	iter->str->Delete(index);
 }
 
 void LineMan::Display () {
@@ -79,17 +72,14 @@ void LineMan::Display () {
       LPTR iter = l_strt;
       do {
           std::cout << iter->lineNO << " ";
-          for (int i = 0; i < CHMAX; i++) {
-              std::cout << iter->chr[i];
-          }
-          std::cout << std::endl;
+		  std::cout << *iter->str << std::endl;
           iter = iter->next;
       } while (iter != l_strt && iter != NULL);
     }
 }
 
 bool LineMan::Full(LPTR ln) {
-    if (ln->currIn >= CHMAX || ln->chr[ln->currIn] == '\n')
+    if (ln->currIn >= STR_SIZE || ln->str[ln->currIn] == '\n')
         return true;
     else
         return false;

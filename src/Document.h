@@ -13,7 +13,6 @@ public:
 private:
   FileHandler* FH;
   unsigned bufSize;
-
 };
 
 

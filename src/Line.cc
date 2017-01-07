@@ -1,4 +1,5 @@
 #include "Line.h"
+#include "String.h"
 #include <cstdlib>
 // init static lineAmnt var
 unsigned Line::lineAmnt = 0;
@@ -7,13 +8,12 @@ unsigned Line::lineAmnt = 0;
 Line::Line() {
     next = NULL;
     prev = NULL;
+	newL = false;
     ++lineAmnt;
     lineNO = lineAmnt;
     currIn = 0;
     size = 0;
-    for (int i = 0; i < CHMAX; i++) {
-        chr[i] = '\0';
-    }
+	str = new Comet::String(STR_SIZE);
 }
 
 Line::Line(const Line& rl){
@@ -22,9 +22,7 @@ Line::Line(const Line& rl){
     ++lineAmnt;
     lineNO = lineAmnt;
     currIn = 0;
-    for (int i = 0; i < CHMAX || rl.chr[i]; i++) {
-        chr[i] = rl.chr[i];
-    }
+    
 }
 
 // Destructor
