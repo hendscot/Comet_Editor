@@ -7,7 +7,7 @@ int main (int argc, char* argv[]) {
   Editor* ed = new Editor();
   ed->LoadFile();
   ed->Display();
-  ed->Delete(0);
+  ed->Delete(1, 3);
   ed->Display();
   std::cin.get();
   return 1;

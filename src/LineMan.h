@@ -8,8 +8,10 @@ public:
     ~LineMan();
     void Append(char);
     void Display();
-    void Delete(int, int);
-	void Insert(int, int, char);
+    void DeleteChar(int, int);
+	void InsertChar(int, int, char);
+	void InsertLine();
+	void DeleteLine(LPTR);
 private:
     LPTR l_strt;
     LPTR l_end;
