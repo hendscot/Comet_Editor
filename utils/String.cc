@@ -195,13 +195,17 @@ namespace Comet {
         }
     }
 
+    // TODO: HANDLE OUT OF RANGE
     // subscript operator
     char& String::operator[](const int index) const {
+        // if desired index isn't out of range
+        // return reference to value
         if (index >= 0 && index < s_sLen) {
             return s_buf[index];
         }
+        // else return null
         else {
-           std::cout << "NOTHING" << std::endl;
+           return char(NULL);
         }
     }
 
@@ -231,6 +235,7 @@ namespace Comet {
         }
     }
 
+    // TODO: needs work
     void String::Term(int in) {
         for (iter = in - 3; iter <= s_bLen; iter++) {
             s_buf[iter] = '\0';
@@ -240,6 +245,7 @@ namespace Comet {
     
     // Public mutators
     void String::Reverse() {
+        // used for temp storage of character
         char temp;
         for (int i = 0, j = s_sLen - 1; i <= j; i++, j--) {
             temp = s_buf[i];
@@ -248,10 +254,16 @@ namespace Comet {
         }
     }
 
+    // replace char at index with new char
     void String::Replace(int in, char ch) {
-        this->s_buf[in] = ch;
+        if (in >= 0 && in < s_sLen);
+            this->s_buf[in] = ch;
+        else {
+            std::cerr << "Operation Aborted: Boundary Error" std::endl;
+        }
     }
 
+    // replace specified range with a new string
     void String::Replace(int b_In, int e_In, const char* str) {
         int slen = len(str);
         if (b_In >= 0 && b_In < s_sLen && e_In >= 0 && e_In < s_sLen) {
