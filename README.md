@@ -1,2 +1,2 @@
 # Comet Editor
-Comet Editor is a light, ncurses-based text editor written completely from scratch. This project is not perfect nor is it meant to be a replacement to other popular text editors; it is simply an exercise for becoming more comfortable with text editor development, OO design, the ncurses library, and programming in general. It uses the flawed but simple concept of storing a document as a doubly-linked list of character arrays to get a basic understanding of text editor design. A more efficient structure would be ideal and possibly implemented given sufficient time.
+Comet Editor is a light, C++ and ncurses-based text editor written completely from scratch. It features a custom string class used to represent lines. 
