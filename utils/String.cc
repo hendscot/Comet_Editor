@@ -15,7 +15,7 @@ namespace Comet {
 
     // Construct with a c-string
     String::String(const char* str) 
-        : String() {
+        : String(len(str)) {
         // use assignment overload to create
         *this = str;
     } // String::String(const char*)

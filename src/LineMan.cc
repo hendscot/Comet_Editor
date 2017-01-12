@@ -99,7 +99,8 @@ void LineMan::Display () {
     if (l_strt){
       LPTR iter = l_strt;
       do {
-          //std::cout << iter->lineNO << " ";
+		  // test if this will work?
+          printw(iter->lineNO);
 		  printw(iter->str->GetBuff());
           iter = iter->next;
       } while (iter != l_strt && iter != NULL);
