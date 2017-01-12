@@ -25,7 +25,6 @@ namespace Comet {
         unsigned                       size;               // stores line length
         static unsigned                lineAmnt;           // maintains total number of lines existing in the application
     // END PRIVATE DATA
-    }; // LINE CLASS
-    typedef                            Line* LPTR;         // line pointer typedef                       
+    }; // LINE CLASS                      
 } // COMET NAMESPACE
 #endif // LINE_H
