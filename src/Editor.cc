@@ -66,10 +66,17 @@ void Editor::Update() {
       move (e_row, --e_col);
       break;
     }
+    case KEY_DC: {
+      e_man->DeleteChar(e_currLine, e_col);
+      clear();
+      this->Display();
+      move (e_row, --e_col);
+    }
     default: {
       e_man->InsertChar(e_currLine, e_col, e_key);
-      //this->Display();
-      mvaddch(e_row, e_col, e_key);
+      clear();
+      this->Display();
+      move (e_row, ++e_col);
       break;
     }
   }
