@@ -204,9 +204,7 @@ namespace Comet {
             return s_buf[index];
         }
         // else return null
-        else {
-           return char(NULL);
-        }
+
     }
 
     // allocate space for string
@@ -256,10 +254,11 @@ namespace Comet {
 
     // replace char at index with new char
     void String::Replace(int in, char ch) {
-        if (in >= 0 && in < s_sLen);
+        if (in >= 0 && in < s_sLen) {
             this->s_buf[in] = ch;
+        }
         else {
-            std::cerr << "Operation Aborted: Boundary Error" std::endl;
+            std::cerr << "Operation Aborted: Boundary Error" << std::endl;
         }
     }
 
@@ -354,6 +353,10 @@ namespace Comet {
 
     char String::Overflow() const {
         return overflow[0];
+    }
+
+    char* String::GetBuff() const {
+        return s_buf;
     }
 
 

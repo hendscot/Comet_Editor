@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iostream>
+#include <ncurses.h>
 #include "Line.h"
 #include "LineMan.h"
 
@@ -98,8 +99,8 @@ void LineMan::Display () {
     if (l_strt){
       LPTR iter = l_strt;
       do {
-          std::cout << iter->lineNO << " ";
-		  std::cout << *iter->str << std::endl;
+          //std::cout << iter->lineNO << " ";
+		  printw(iter->str->GetBuff());
           iter = iter->next;
       } while (iter != l_strt && iter != NULL);
     }

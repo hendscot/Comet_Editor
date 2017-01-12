@@ -1,5 +1,4 @@
 #include "Line.h"
-#include "String.h"
 #include <cstdlib>
 // init static lineAmnt var
 unsigned Line::lineAmnt = 0;

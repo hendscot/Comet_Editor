@@ -47,8 +47,9 @@ namespace Comet {
             char&   operator  []  (const int)      const;
 
             // Public Accessors
-            int     Length()                       const;
-            char    Overflow()                     const;
+            int     Length    ()                   const;
+            char    Overflow  ()                   const;
+            char*   GetBuff   ()                   const;
 
             // Public Mutators
             void    Replace       (int, char);

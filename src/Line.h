@@ -1,6 +1,6 @@
 #ifndef LINE_H
 #define LINE_H
-#include "String.h"
+#include "../utils/String.h"
 const int STR_SIZE = 80;
 class Line {
 friend class LineMan;
