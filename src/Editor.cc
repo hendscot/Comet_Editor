@@ -1,12 +1,11 @@
 #include "Editor.h"
-#include "Document.h"
-#include "LineMan.h"
 #include <ncurses.h>
 #include <iostream>
 // BEGIN NAMESPACE COMET
 namespace Comet {
   // Constructing a new Editor with a known pathname
   Editor::Editor(char* pathname) {
+    e_path             = pathname;                 // initialize e_path with pathname of desired file    
     this->Init         ();                         // Initalize members and ncurses
     this->LoadFile     ();                         // Load file into editor
     this->Display      ();                         // print initial state of file to ncurses window
@@ -28,7 +27,6 @@ namespace Comet {
     keypad             (stdscr, true);             // enable ncurses special keys
     e_doc              = new Document;             // Create new document object
     e_man              = new LineMan;              // create new LineMan object
-    e_path             = pathname;                 // initialize e_path with pathname of desired file
     e_shouldClose      = false;                    // set shouldClose state to false
     e_currLine         = 0;                        // default line is 0
     e_currIndex        = 0;                        // default index is 0
@@ -45,7 +43,7 @@ namespace Comet {
 
   // Write contents of editor to file
   void Editor::SaveFile() {
-    e_doc->SaveDocument(e_path);                   // TODO: TEST
+    //e_doc->SaveDocument(e_path);                   // TODO: TEST
   } // SAVEFILE ()
 
   // Call line manager display function to write contents of document to ncurses
@@ -88,11 +86,12 @@ namespace Comet {
         move (e_currLine, --e_currIndex);          // move cursor left one index
         break;
       }
-      case KEY_DC: {                               // TODO
+      case KEY_BACKSPACE: {                               // TODO
         e_man->DeleteChar(e_currLine, e_currIndex);
         clear();
         this->Display();
         move (e_currLine, --e_currIndex);
+        break;
       }
       default: {                                             // if letter TODO: specify if alpha char
         e_man->InsertChar(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index

@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-class Document;
-class LineMan;
+#include "Document.h"
+#include "LineMan.h"
 namespace Comet {
   class Editor {
   // BEGIN PUBLIC DATA
@@ -11,7 +11,7 @@ namespace Comet {
     ~Editor                        ();          // Simple deconstructor - destroys LineMan and Document objects
 
     // PUBLIC METHODS
-    Run                            ();          // Initiates Editor objects system loop
+    void Run                       ();          // Initiates Editor objects system loop
 
   // END PUBLIC DATA
 
@@ -33,7 +33,7 @@ namespace Comet {
     void         SaveFile          ();          // Save current file state
     void         Update            ();          // Method used in main loop, runs necessary system methods (HandleInput)
     void         Delete            (int, int);  // Interface for LineMan Deletechar method (deletes specified index at current line)
-
+    void         HandleInput       ();
     bool         ShouldClose       ();          // Returns state of e_shouldClose boolean member (instructs system loop to end)
 
   // END PRIVATE DATA
