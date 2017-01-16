@@ -1,9 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-#include "Document.h"
-#include "LineMan.h"
 namespace Comet {
-  class Editor {
+  class Editor : protected EditorCore {
   // BEGIN PUBLIC DATA
   public:
     // CONSTRUCTOR/DESTRUCTOR
@@ -17,25 +15,9 @@ namespace Comet {
 
   // BEGIN PRIVATE DATA
   private:
-    // PRIVATE MEMBERS
-    char*        e_path;                        // Maintains string of filepath
-    bool         e_shouldClose;                 // State variable that alerts system loop to end
-    int          e_key;                         // Stores value of key pressed by user
-    int          e_currLine;                    // Current column (index) to be passed to ncurses and to manipulate files
-    int          e_currIndex;                   // Current row (line) to be passed to ncurses and to manipulate files
-    LineMan*     e_man;                         // LineMan object which contains and controls lines
-    Document*    e_doc;                         // Document object for loading and saving files to be manipulated
-
     // PRIVATE METHODS
-    void         Display           ();          // Call LineMan class Display method, loads state of file into ncurses window after change
-    void         Init              ();          // Initialize ncurses and private members
-    void         LoadFile          ();          // Call Document class LoadDocument method which loads file state into a doc buffer
-    void         SaveFile          ();          // Save current file state
     void         Update            ();          // Method used in main loop, runs necessary system methods (HandleInput)
-    void         Delete            (int, int);  // Interface for LineMan Deletechar method (deletes specified index at current line)
-    void         HandleInput       ();
     bool         ShouldClose       ();          // Returns state of e_shouldClose boolean member (instructs system loop to end)
-
   // END PRIVATE DATA
   };
 }
