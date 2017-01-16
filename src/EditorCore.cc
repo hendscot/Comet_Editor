@@ -4,9 +4,6 @@ namespace Comet {
 
   EditorCore::EditorCore() {
     this->Init         ();                         // Initalize members and ncurses
-    this->LoadFile     ();                         // Load file into editor
-    this->Display      ();                         // print initial state of file to ncurses window
-    move               (e_currLine, e_currIndex);  // move ncurses cursor to default location
   } // EDITOR (CHAR*)
 
   // Deconstruct Editor
@@ -27,6 +24,7 @@ namespace Comet {
     e_shouldClose      = false;                    // set shouldClose state to false
     e_currLine         = 0;                        // default line is 0
     e_currIndex        = 0;                        // default index is 0
+    move               (e_currLine, e_currIndex);  // move ncurses cursor to default location
   } // INIT ()
 
   void EditorCore::Poll () {

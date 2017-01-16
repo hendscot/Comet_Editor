@@ -107,7 +107,6 @@ namespace Comet {
 		LPTR iter = l_strt;
 		do {
 			// test if this will work?
-			printw(iter->lineNO);
 			printw(iter->str->GetBuff());
 			iter = iter->next;
 		} while (iter != l_strt && iter != NULL);
