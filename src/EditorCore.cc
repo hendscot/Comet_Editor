@@ -55,7 +55,7 @@ namespace Comet {
       case KEY_UP: {                               // if up arrow key
         if (e_currLine > 0) {                      // move cursor up one line if not yet on first line
             if ((e_currIndex) > e_man->GetLength(e_currLine - 1)) {
-                move (--e_currLine, (e_man->GetLength(e_currLine + 1)));
+                move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine + 1))));
             }
             else {
                 move (--e_currLine, e_currIndex);
@@ -66,7 +66,7 @@ namespace Comet {
       case KEY_DOWN: {                             // if down arrow key
         if ((e_currLine + 1) < e_man->GetLineCount () - 1) {
             if (e_currIndex >= e_man->GetLength(e_currLine + 1)) {
-                move (++e_currLine, (e_man->GetLength(e_currLine + 1)));          // move cursor down one line
+                move (++e_currLine, (e_currIndex = (e_man->GetLength(e_currLine + 1))));          // move cursor down one line
             }
         
             else {
@@ -90,7 +90,7 @@ namespace Comet {
             if (e_currLine > 0) {
                 e_man->DeleteChar(e_currLine, e_currIndex);
                 this->Display();
-                move (--e_currLine, (e_man->GetLength(e_currLine - 1) - 1));
+                move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine - 1))));
             }
             else {
             

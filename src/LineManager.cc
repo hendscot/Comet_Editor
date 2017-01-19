@@ -72,6 +72,8 @@ namespace Comet {
 			++iter->size;
 		}
 	}
+	
+	// TODO: HANDLE CONCATENATING LINES
 	// delete a character at a specific index and line
 	void LineManager::DeleteChar(int LN, int index) {
 		LPTR iter = l_strt;
