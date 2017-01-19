@@ -1,11 +1,12 @@
 #ifndef EDITOR_H
 #define EDITOR_H
+#include "EditorCore.h"
 namespace Comet {
-  class Editor : protected EditorCore {
+  class Editor : public EditorCore {
   // BEGIN PUBLIC DATA
   public:
     // CONSTRUCTOR/DESTRUCTOR
-    Editor                         (char*);     // Simple constructor   - constructs new Editor object with pathname of file
+    Editor                         ();     // Simple constructor   - constructs new Editor object with pathname of file
     ~Editor                        ();          // Simple deconstructor - destroys LineMan and Document objects
 
     // PUBLIC METHODS

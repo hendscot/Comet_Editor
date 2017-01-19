@@ -1,5 +1,4 @@
 #include "Editor.h"
-#include "EditorCore.h"
 // BEGIN NAMESPACE COMET
 namespace Comet {
   // Constructing a new Editor

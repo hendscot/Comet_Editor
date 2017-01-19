@@ -12,9 +12,6 @@ namespace Comet {
         Line                           ();                 // No parameter constructor
         Line                           (const Line&);      // Copy constructor to create duplicate liner
         ~Line                          ();                 // Destructor
-        
-        int 
-        Length                         ();                 // Return string length
     // END PUBLIC DATA
 
     // BEGIN PRIVATE DATA
@@ -25,7 +22,7 @@ namespace Comet {
         bool                           newL;               // stores state of line (contains a newline or not)
         unsigned                       lineNO;             // maintains corresponding line number
         unsigned                       currIn;             // maintains current index of line
-        int                            size;               // stores line length
+        unsigned                       size;               // stores line length
         static unsigned                lineAmnt;           // maintains total number of lines existing in the application
     // END PRIVATE DATA
     }; // LINE CLASS                      

@@ -32,9 +32,5 @@ namespace Comet {
     Line::~Line () {
         --lineAmnt;                                            // removing line so decrease line amount
         delete str;                                            // destroy string data
-    } // Line ()    
-    
-    int Line::Length () {
-        return size;
-    }
+    } // Line ()
 } // END NAMESPACE COMET

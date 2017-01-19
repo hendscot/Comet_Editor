@@ -7,20 +7,23 @@ LINK = -lncurses
 
 all: main
 
-main: FileHandler.o LineMan.o Line.o Document.o Editor.o String.o main.o
-	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)LineMan.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
+main: FileHandler.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
+	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
 
 FileHandler.o: $(UTILS)FileHandler.cc $(UTILS)FileHandler.h
 	$(GCC) -c -o $(OBJ)FileHandler.o $(UTILS)FileHandler.cc
 
-LineMan.o: $(SRC)LineMan.h $(SRC)LineMan.cc
-	$(GCC) -c -o $(OBJ)LineMan.o $(SRC)LineMan.cc
+LineManager.o: $(SRC)LineManager.h $(SRC)LineManager.cc
+	$(GCC) -c -o $(OBJ)LineManager.o $(SRC)LineManager.cc
 
 Line.o: $(SRC)Line.h $(SRC)Line.cc
 	$(GCC) -c -o $(OBJ)Line.o $(SRC)Line.cc
 
 Document.o: $(SRC)Document.h $(SRC)Document.cc
 	$(GCC) -c -o $(OBJ)Document.o $(SRC)Document.cc
+
+EditorCore.o: $(SRC)EditorCore.h $(SRC)EditorCore.cc
+	$(GCC) -c -o $(OBJ)EditorCore.o $(SRC)EditorCore.cc $(LINK)
 
 Editor.o: $(SRC)Editor.h $(SRC)Editor.cc
 	$(GCC) -c -o $(OBJ)Editor.o $(SRC)Editor.cc $(LINK)

@@ -17,7 +17,6 @@ namespace Comet {
         void InsertLine();                                           // insert a new line
         void DeleteLine(LPTR);                                       // delete a given line
         int  GetLength (int);
-        int  GetLineCount ();
     // END PUBLIC DATA
 
     // BEGIN PRIVATE DATA

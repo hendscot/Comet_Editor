@@ -92,6 +92,7 @@ namespace Comet {
 			if (ln->prev != ln && ln->next != l_strt) {
 				ln->prev->next = ln->next;
 				for (iter = ln->next; iter != l_strt; iter = iter->next) {
+					--iter->lineNO;
 				}
 				delete temp;
 			}
@@ -143,10 +144,6 @@ namespace Comet {
 	int LineManager::GetLength (int LN) {
 		LPTR iter = l_strt;
 		for (int i = 0; i < LN && iter->next != l_strt; i++, iter = iter->next);        // find target line
-		return iter->Length ();
-	}
-
-	int LineManager::GetLineCount() {
-		return l_strt->lineAmnt;
+		return iter->str->Length ();
 	}
 }
