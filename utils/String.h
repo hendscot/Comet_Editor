@@ -4,7 +4,7 @@
 #include <iostream>
 
 //#define NULL ( (void *) 0)
-#define COMET_STRING_VERSION     0.0.8
+#define COMET_STRING_VERSION     0.1.0
 #define CASEDIFF                 32
 #define CAP_BEG                  65
 #define CAP_END                  90
@@ -63,6 +63,8 @@ namespace Comet {
             bool    Lower         ();
             bool    Lower         (int);
             bool    Lower         (int, int);
+            void    Concat        (const String&);
+            String& Substr        (int, int);
 
         private:
             // Private Data Members

@@ -36,7 +36,7 @@ namespace Comet {
         // Check that we're not assigning same objs
         if (this != &str) {
             // Only resize if new length is >= to buffer length
-            if (str.s_sLen >= s_bLen)
+            if (str.s_sLen > s_bLen)
                 // allocate with new string size
                 Alloc (str.s_sLen);
             else {
@@ -47,6 +47,7 @@ namespace Comet {
             // assign buffer to assignee buffer
             Fill(str.s_buf);
         }
+        std::cout << "ASSIGNMENT" << std::endl;
         return *this;
     } // operator+(const String&)
 
@@ -54,7 +55,7 @@ namespace Comet {
     String& String::operator=(const char* str) {
         int length = len(str);
         // only reallocate if new string length is >= buffer length
-        if (length) >= s_bLen) {
+        if (length > s_bLen) {
             Alloc (length);
         }
         else {
@@ -171,6 +172,17 @@ namespace Comet {
         return (*this += str.s_buf);
     }
 
+    void String::Concat(const String& str) {
+        if (str.s_sLen > (this->s_bLen - this->s_sLen)) {
+
+        }
+        else {
+            for (int i = 0, iter = s_sLen; i < (s_sLen + str.s_sLen); iter++, i++) {
+                this->s_buf[iter] = str.s_buf[i];
+            }
+        }
+    }
+
     // concatenate two c-strings
     void String::Concat(const char* str1, const char* str2) {
         // len1 = length of first string, len2 = length of second string
@@ -185,9 +197,21 @@ namespace Comet {
         }
     }
 
+    String& String::Substr(int in1, int in2) {
+        if (in1 >= 0 && in2 < s_sLen && in1 <= in2) {
+            char* buff = new char[((in2 - in1)+1) + 1]();
+            for (int i = 0, iter = in1; iter <= in2; iter++, i++) {
+                buff[i] = s_buf[iter];
+            }
+            String* string = new String(buff);
+            delete buff;
+            return *string;
+        }
+    }
+
     // fill buffer with c-string
     void String::Fill(const char* str) {
-        for (iter = 0; iter < this->s_sLen; iter++) {
+        for (iter = 0; iter < s_sLen; iter++) {
             this->s_buf[iter] = str[iter];
         }
     }
@@ -217,7 +241,7 @@ namespace Comet {
                 s_sLen = len;
                 s_bLen = s_sLen;
                 s_buf = new char[s_bLen + 1];
-                s_buf[s_bLen + 1] = '\0';
+                s_buf[s_bLen] = '\0';
             }
         }
     }
