@@ -5,10 +5,6 @@ namespace Comet {
     String::String(int size) {
         // NULL the buffer
         s_buf = NULL;
-        // string length is 0
-        s_sLen = size;
-        // buffer length is 0
-        s_bLen = size;
         // allocate space
         Alloc(size);
     } // String::String()
@@ -39,31 +35,33 @@ namespace Comet {
     String& String::operator=(const String& str) {
         // Check that we're not assigning same objs
         if (this != &str) {
-            // set string length to assigning string
-            s_sLen = str.s_sLen;
             // Only resize if new length is >= to buffer length
-            if (str.s_sLen >= s_bLen)
+            if (str.s_sLen > s_bLen)
                 // allocate with new string size
                 Alloc (str.s_sLen);
-            else
+            else {
                 // else just terminate end
+                s_sLen = str.s_sLen;
                 Term(s_sLen); //DOES THIS EVEN WORK??
+            }
             // assign buffer to assignee buffer
             Fill(str.s_buf);
         }
+        std::cout << "ASSIGNMENT" << std::endl;
         return *this;
     } // operator+(const String&)
 
     // Assignment overload (String and C-String)
     String& String::operator=(const char* str) {
-        // update this length to length of c-string
-        s_sLen = len(str);
+        int length = len(str);
         // only reallocate if new string length is >= buffer length
-        if (s_sLen >= s_bLen) {
-            Alloc (s_sLen);
+        if (length > s_bLen) {
+            Alloc (length);
         }
-        else
+        else {
+            s_sLen = length;
             Term(s_sLen);
+        }
         Fill(str);
         return *this;
     }
@@ -174,6 +172,17 @@ namespace Comet {
         return (*this += str.s_buf);
     }
 
+    void String::Concat(const String& str) {
+        if (str.s_sLen > (this->s_bLen - this->s_sLen)) {
+
+        }
+        else {
+            for (int i = 0, iter = s_sLen; i < (s_sLen + str.s_sLen); iter++, i++) {
+                this->s_buf[iter] = str.s_buf[i];
+            }
+        }
+    }
+
     // concatenate two c-strings
     void String::Concat(const char* str1, const char* str2) {
         // len1 = length of first string, len2 = length of second string
@@ -188,9 +197,21 @@ namespace Comet {
         }
     }
 
+    String& String::Substr(int in1, int in2) {
+        if (in1 >= 0 && in2 < s_sLen && in1 <= in2) {
+            char* buff = new char[((in2 - in1)+1) + 1]();
+            for (int i = 0, iter = in1; iter <= in2; iter++, i++) {
+                buff[i] = s_buf[iter];
+            }
+            String* string = new String(buff);
+            delete buff;
+            return *string;
+        }
+    }
+
     // fill buffer with c-string
     void String::Fill(const char* str) {
-        for (iter = 0; iter < this->s_sLen; iter++) {
+        for (iter = 0; iter < s_sLen; iter++) {
             this->s_buf[iter] = str[iter];
         }
     }
@@ -217,8 +238,10 @@ namespace Comet {
             }
             // allocate if new length is greater than 0
             if (len != 0) {
-                s_bLen = len;
-                s_buf = new char[s_bLen + 1]();
+                s_sLen = len;
+                s_bLen = s_sLen;
+                s_buf = new char[s_bLen + 1];
+                s_buf[s_bLen] = '\0';
             }
         }
     }
@@ -227,6 +250,7 @@ namespace Comet {
     void String::Dealloc() {
         // deallocate if buffer is full
         if (s_bLen > 0 && s_buf != NULL) {
+            s_sLen = 0;
             s_bLen = 0;
             delete [] s_buf;
             s_buf = NULL;
@@ -235,7 +259,7 @@ namespace Comet {
 
     // TODO: needs work
     void String::Term(int in) {
-        for (iter = in - 3; iter <= s_bLen; iter++) {
+        for (iter = s_sLen; iter <= s_bLen; iter++) {
             s_buf[iter] = '\0';
         }
     }
