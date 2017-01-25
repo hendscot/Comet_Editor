@@ -28,6 +28,7 @@ namespace Comet {
         bool NoLines();                                              // check if any lines exist
         bool Full(LPTR);                                             // check if line is at max defined capacity
         void SelfDestruct ();
+        void ConcatLines  (LPTR);
     // END PRIVATE DATA
     }; // END LineManager CLASS
 } // END COMET NAMESPACE

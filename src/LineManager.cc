@@ -151,4 +151,17 @@ namespace Comet {
 	int LineManager::GetLineCount() {
 		return l_strt->lineAmnt;
 	}
+
+	void LineManager::ConcatLines (LPTR LN) {
+		if (LN->prev->size < 80) {
+			int space = (80 - LN->prev->size);
+			if (LN->size <= space) {
+				LN->prev->str->Concat(*LN->str);
+			}
+			else {
+				Comet::String sub(LN->str->SubStr(0, (space - 1)));
+				LN->prev->str->Concat(sub);
+			}
+		}
+	}
 }
