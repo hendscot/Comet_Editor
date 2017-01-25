@@ -54,6 +54,7 @@ namespace Comet {
             // Public Mutators
             void    Replace       (int, char);
             void    Replace       (int, int, const char*);
+            void    Append        (char);
             bool    Insert        (int, char);
             void    Delete        (int);
             void    Reverse       ();
@@ -78,7 +79,7 @@ namespace Comet {
             // Private Mutators
             void    Alloc         (int);
             void    Dealloc       ();
-            void    Term          (int);
+            void    Term          ();
             void    Fill          (const char*);
             void    Concat        (const char*, const char*);
 

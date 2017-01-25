@@ -64,7 +64,7 @@ namespace Comet {
 			Newline(); 																	// insert new line node at end
 			iter = iter->next; 
 		}
-		iter->str->Insert(iter->currIn, ch);											// insert a ch at curr string index
+		iter->str->Append(ch);											// insert a ch at curr string index
 		if (ch == '\n')																	// if ch is a newline char
 			iter->newL = true;	
 		else {

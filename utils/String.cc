@@ -5,6 +5,8 @@ namespace Comet {
     String::String(int size) {
         // NULL the buffer
         s_buf = NULL;
+        
+        s_sLen = 0;
         // allocate space
         Alloc(size);
     } // String::String()
@@ -12,13 +14,17 @@ namespace Comet {
     // Construct with a c-string
     String::String(const char* str) 
         : String(len(str)) {
+        s_sLen = s_bLen;
+        std::cout << s_sLen << std::endl;
         // use assignment overload to create
         *this = str;
     } // String::String(const char*)
 
     // Copy Constructor
     String::String(const String& str) 
-        : String() {
+        : String(str.s_sLen) {
+        s_sLen = s_bLen;
+        std::cout << s_sLen << std::endl;
         // use assignment overload to create
         *this = str;
     } // String::String(const String&)
@@ -36,31 +42,33 @@ namespace Comet {
         // Check that we're not assigning same objs
         if (this != &str) {
             // Only resize if new length is >= to buffer length
-            if (str.s_sLen > s_bLen)
+            if (str.s_sLen > s_bLen) {
                 // allocate with new string size
                 Alloc (str.s_sLen);
+                s_sLen = str.s_sLen;
+            }
             else {
                 // else just terminate end
                 s_sLen = str.s_sLen;
-                Term(s_sLen); //DOES THIS EVEN WORK??
+                //Term(); //DOES THIS EVEN WORK??
             }
             // assign buffer to assignee buffer
             Fill(str.s_buf);
         }
-        std::cout << "ASSIGNMENT" << std::endl;
         return *this;
     } // operator+(const String&)
 
     // Assignment overload (String and C-String)
     String& String::operator=(const char* str) {
         int length = len(str);
-        // only reallocate if new string length is >= buffer length
+        // only reallocate if new string length is > buffer length
         if (length > s_bLen) {
             Alloc (length);
+            s_sLen = length;
         }
         else {
             s_sLen = length;
-            Term(s_sLen);
+            //Term();
         }
         Fill(str);
         return *this;
@@ -238,10 +246,9 @@ namespace Comet {
             }
             // allocate if new length is greater than 0
             if (len != 0) {
-                s_sLen = len;
-                s_bLen = s_sLen;
+                s_bLen = len;
                 s_buf = new char[s_bLen + 1];
-                s_buf[s_bLen] = '\0';
+                Term();
             }
         }
     }
@@ -258,8 +265,8 @@ namespace Comet {
     }
 
     // TODO: needs work
-    void String::Term(int in) {
-        for (iter = s_sLen; iter <= s_bLen; iter++) {
+    void String::Term() {
+        for (iter = 0; iter <= s_bLen; iter++) {
             s_buf[iter] = '\0';
         }
     }
@@ -301,6 +308,20 @@ namespace Comet {
     void String::Delete(int in) {
         for (iter = (in + 1); iter <= s_sLen; iter++) {
             s_buf[iter - 1] = s_buf[iter];
+        }
+    }
+
+    void String::Append(char ch) {
+        if (s_sLen < s_bLen) {
+            s_sLen += 1;
+            s_buf[(s_sLen - 1)] = ch;
+        }
+        else {
+            char* t_buf = new char[s_bLen + 1];
+            t_buf[s_bLen] = '\0';
+            Alloc(s_bLen + 10);
+            Fill(t_buf);
+            delete t_buf;
         }
     }
 
