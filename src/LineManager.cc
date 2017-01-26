@@ -79,32 +79,27 @@ namespace Comet {
 		LPTR iter = l_strt;
 		for (int i = 0; i < LN && iter->next != l_strt; i++, iter = iter->next);        // find target line
 		if (iter->size == 0) {
-			DeleteLine(iter);															// delete line if target line is empty
+			DeleteLine(LN);															// delete line if target line is empty
 		}
 		else {
-			if (index == 0) {
-				ConcatLines(iter);
-			}
-			else {
-				iter->str->Delete(index);													// delete char at index in string
-				--iter->size;																// decrement size
-			}
+			iter->str->Delete(index);													// delete char at index in string
+			--iter->size;																// decrement size
 		}
 	}
 
-	void LineManager::DeleteLine(LPTR ln) {
+	void LineManager::DeleteLine(int ln) {
 		LPTR iter = l_strt;
-		LPTR temp = ln;
+		for (int i = 0; i < ln && iter->next != l_strt; i++, iter = iter->next);        // find target line
+		LPTR temp = iter;
 		if (ln) {
-			if (ln->prev != ln && ln->next != l_strt) {
-				ln->prev->next = ln->next;
-				for (iter = ln->next; iter != l_strt; iter = iter->next) {
-				}
+			if (iter->prev != iter && iter->next != l_strt) {
+				iter->prev->next = iter->next;
+				if (temp->size > 0) ConcatLines(temp);
 				delete temp;
 			}
 			else {
 				delete temp;
-				ln = ln->prev = ln->next = NULL;
+				iter = iter->prev = iter->next = NULL;
 			}
 		}
 	}

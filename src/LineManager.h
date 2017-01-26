@@ -15,7 +15,7 @@ namespace Comet {
         void DeleteChar(int, int);                                   // Delete char from target at line at target index
         void InsertChar(int, int, char);                             // Insert char to target line at target index
         void InsertLine();                                           // insert a new line
-        void DeleteLine(LPTR);                                       // delete a given line
+        void DeleteLine(int);                                       // delete a given line
         int  GetLength (int);
         int  GetLineCount ();
     // END PUBLIC DATA

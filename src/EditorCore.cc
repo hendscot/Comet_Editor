@@ -86,20 +86,16 @@ namespace Comet {
         break;
       }
       case KEY_BACKSPACE: {                               
-        if ((e_currIndex) == 0) {
-            if (e_currLine > 0) {
-                e_man->DeleteChar(e_currLine, e_currIndex);
-                this->Display();
-                move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine - 1))));
-            }
-            else {
+        if ((e_currIndex) > 0) {
+          e_man->DeleteChar(e_currLine, e_currIndex - 1);
+          this->Display();
+          move (e_currLine, (--e_currIndex)); 
             
-            }
         }
         else {
-            e_man->DeleteChar(e_currLine, (e_currIndex - 1));
+            e_man->DeleteLine(e_currLine);
             this->Display();
-            move (e_currLine, --e_currIndex);
+            move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1)));
         }
             
         break;

@@ -185,7 +185,7 @@ namespace Comet {
 
         }
         else {
-            for (int i = 0, iter = s_sLen; i < (s_sLen + str.s_sLen); iter++, i++) {
+            for (int i = 0, iter = s_sLen; i < str.s_sLen; iter++, i++) {
                 this->s_buf[iter] = str.s_buf[i];
             }
         }
@@ -309,6 +309,7 @@ namespace Comet {
         for (iter = (in + 1); iter <= s_sLen; iter++) {
             s_buf[iter - 1] = s_buf[iter];
         }
+        s_sLen -= 1;
     }
 
     void String::Append(char ch) {
