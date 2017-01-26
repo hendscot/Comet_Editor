@@ -65,7 +65,7 @@ namespace Comet {
             bool    Lower         (int);
             bool    Lower         (int, int);
             void    Concat        (const String&);
-            String& Substr        (int, int);
+            String Substr        (int, int);
 
         private:
             // Private Data Members

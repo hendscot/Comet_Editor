@@ -159,7 +159,7 @@ namespace Comet {
 				LN->prev->str->Concat(*LN->str);
 			}
 			else {
-				Comet::String sub = (LN->str->Substr(0, (space - 1)));
+				Comet::String sub(LN->str->Substr(0, (space - 1)));
 				LN->prev->str->Concat(sub);
 			}
 		}

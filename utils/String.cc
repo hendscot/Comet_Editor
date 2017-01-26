@@ -205,15 +205,15 @@ namespace Comet {
         }
     }
 
-    String& String::Substr(int in1, int in2) {
+    String String::Substr(int in1, int in2) {
         if (in1 >= 0 && in2 < s_sLen && in1 <= in2) {
             char* buff = new char[((in2 - in1)+1) + 1]();
             for (int i = 0, iter = in1; iter <= in2; iter++, i++) {
                 buff[i] = s_buf[iter];
             }
-            String* string = new String(buff);
+            String string(buff);
             delete buff;
-            return *string;
+            return string;
         }
     }
 
