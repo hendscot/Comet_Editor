@@ -87,15 +87,15 @@ namespace Comet {
       }
       case KEY_BACKSPACE: {                               
         if ((e_currIndex) > 0) {
-          e_man->DeleteChar(e_currLine, e_currIndex - 1);
+          Delete(e_currLine, e_currIndex);
           this->Display();
           move (e_currLine, (--e_currIndex)); 
             
         }
-        else {
-            e_man->DeleteLine(e_currLine);
+        else if (e_currIndex == 0 && e_currLine > 0) {
+            Delete(e_currLine, e_currIndex);
             this->Display();
-            move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1)));
+            move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine - 1))));
         }
             
         break;
@@ -111,6 +111,6 @@ namespace Comet {
 
     // Delete current index of current liner TODO
   void EditorCore::Delete (int ln, int in) {
-    e_man->DeleteChar(e_currLine, (in - 1));
+    e_man->DeleteChar(e_currLine, in);
   } // DELETE (INT, INT)
 }

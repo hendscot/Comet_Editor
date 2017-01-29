@@ -20,7 +20,8 @@ namespace Comet {
 		LPTR newL = new Line;                                        // allocate space for new line node
 		if (NoLines()) {                                             // check if any lines exist 
 			l_strt = l_end = newL;									 // point both the beginning and end to the newly allocated line
-			l_strt->next = l_end;                                    
+			l_strt->next = l_end; 
+			l_strt->prev = l_end;                                   
 		}
 		else {                                                       // at least one line must exist
 			LPTR iter = l_end;                                       // hold address of l_end
@@ -64,10 +65,10 @@ namespace Comet {
 			Newline(); 																	// insert new line node at end
 			iter = iter->next; 
 		}
-		iter->str->Append(ch);											// insert a ch at curr string index
 		if (ch == '\n')																	// if ch is a newline char
 			iter->newL = true;	
 		else {
+			iter->str->Append(ch);											// insert a ch at curr string index
 			++iter->currIn;
 			++iter->size;
 		}
@@ -78,28 +79,42 @@ namespace Comet {
 	void LineManager::DeleteChar(int LN, int index) {
 		LPTR iter = l_strt;
 		for (int i = 0; i < LN && iter->next != l_strt; i++, iter = iter->next);        // find target line
-		if (iter->size == 0) {
-			DeleteLine(LN);															// delete line if target line is empty
+		if (index == 0) {
+			DeleteLine(iter);															// delete line if target line is empty
 		}
 		else {
-			iter->str->Delete(index);													// delete char at index in string
+			iter->str->Delete(index - 1);													// delete char at index in string
 			--iter->size;																// decrement size
 		}
 	}
 
-	void LineManager::DeleteLine(int ln) {
-		LPTR iter = l_strt;
-		for (int i = 0; i < ln && iter->next != l_strt; i++, iter = iter->next);        // find target line
-		LPTR temp = iter;
-		if (ln) {
-			if (iter->prev != iter && iter->next != l_strt) {
-				iter->prev->next = iter->next;
-				if (temp->size > 0) ConcatLines(temp);
-				delete temp;
-			}
-			else {
-				delete temp;
-				iter = iter->prev = iter->next = NULL;
+	void LineManager::DeleteLine(LPTR LN) {
+		if (LN->lineAmnt > 1) {
+			if (1) {
+				if (LN->size > 0){
+					if (ConcatLines(LN) == 0) {
+		        		if (LN != l_end) {
+							LN->prev->next = LN->next;
+							delete LN;
+						}
+						else {
+							l_end = LN->prev;
+							l_end->next = LN->next;
+							delete LN;
+						}
+					}
+				}
+				else {
+					if (LN != l_end) {
+						LN->prev->next = LN->next;
+						delete LN;
+					}
+					else {
+						l_end = LN->prev;
+						l_end->next = LN->next;
+						delete LN;
+					}
+				}
 			}
 		}
 	}
@@ -110,6 +125,7 @@ namespace Comet {
 		do {
 			// test if this will work?
 			printw(iter->str->GetBuff());
+			printw("\n");
 			iter = iter->next;
 		} while (iter != l_strt && iter != NULL);
 		}
@@ -152,15 +168,19 @@ namespace Comet {
 		return l_strt->lineAmnt;
 	}
 
-	void LineManager::ConcatLines (LPTR LN) {
+	int LineManager::ConcatLines (LPTR LN) {
 		if (LN->prev->size < 80) {
 			int space = (80 - LN->prev->size);
 			if (LN->size <= space) {
-				LN->prev->str->Concat(*LN->str);
+				LN->prev->str->Concat(LN->str->Substr(0, LN->str->Length()-1));
+				LN->prev->size = LN->prev->str->Length();
+				return 0;
 			}
 			else {
 				Comet::String sub(LN->str->Substr(0, (space - 1)));
+				//LN->str->Delete(0, (space - 1));
 				LN->prev->str->Concat(sub);
+				return 1;
 			}
 		}
 	}

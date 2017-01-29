@@ -15,7 +15,6 @@ namespace Comet {
     String::String(const char* str) 
         : String(len(str)) {
         s_sLen = s_bLen;
-        std::cout << s_sLen << std::endl;
         // use assignment overload to create
         *this = str;
     } // String::String(const char*)
@@ -24,7 +23,6 @@ namespace Comet {
     String::String(const String& str) 
         : String(str.s_sLen) {
         s_sLen = s_bLen;
-        std::cout << s_sLen << std::endl;
         // use assignment overload to create
         *this = str;
     } // String::String(const String&)
@@ -180,6 +178,7 @@ namespace Comet {
         return (*this += str.s_buf);
     }
 
+    // TODO : ERROR HANDLING
     void String::Concat(const String& str) {
         if (str.s_sLen > (this->s_bLen - this->s_sLen)) {
 
@@ -188,6 +187,7 @@ namespace Comet {
             for (int i = 0, iter = s_sLen; i < str.s_sLen; iter++, i++) {
                 this->s_buf[iter] = str.s_buf[i];
             }
+            this->s_sLen += str.s_sLen;
         }
     }
 
@@ -311,6 +311,16 @@ namespace Comet {
         }
         s_sLen -= 1;
     }
+
+    /*void String::Delete(int in1, int in2) {
+        for (int i = in1, j = (in2 + 1); i < in2, j < s_sLen; i++, j++) {
+            s_buf[i] = s_buf[j];
+        }
+        for (int i = (s_sLen - (in2 + 1)); i < s_sLen; i++) {
+            s_buf[i+1] = '\n';
+        }
+        s_sLen = ((in2 - in1) + 1);
+    }*/
 
     void String::Append(char ch) {
         if (s_sLen < s_bLen) {

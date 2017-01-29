@@ -57,6 +57,7 @@ namespace Comet {
             void    Append        (char);
             bool    Insert        (int, char);
             void    Delete        (int);
+            void    Delete        (int, int);
             void    Reverse       ();
             bool    Upper         ();
             bool    Upper         (int);
