@@ -36,21 +36,10 @@ namespace Comet {
 	void LineManager::InsertChar(int ln, int in, char ch) {
 		int i;
 		LPTR iter = l_strt;                                                          // iterate lines from beginning
-		for (i = 0; i < ln && iter->next != l_strt; iter = iter->next, i++);     // iterate while not at target line and 
+		for (i = 0; i < ln; iter = iter->next, i++);     // iterate while not at target line and 
 		if (i == ln) {
-			if (ch != '\n' && iter->str[in] == '\n') {                               // if insert ch is not a newline and current index is newline
-				iter->str->Insert(in, ch);                                           // insert new ch at current index
-				iter->newL = false;													 // set newL exists to false
-				++iter->size;                                                        // increment size
-			}
-			else if (ch == '\n') {													 // check if new character is a newline
-				iter->str->Insert(in, ch);
-				iter->newL = true;
-			}
-			else {
-				iter->str->Insert(in, ch);
-				++iter->size;
-			}
+			iter->str->Insert(in, ch);
+			++iter->size;
 		}
 	}
 	// TODO: ADD METHOD FOR INSERTING ENTIRE STRINGS FOR LESS FUNCTION CALLS
@@ -65,8 +54,9 @@ namespace Comet {
 			Newline(); 																	// insert new line node at end
 			iter = iter->next; 
 		}
-		if (ch == '\n')																	// if ch is a newline char
-			iter->newL = true;	
+		if (ch == '\n') {
+			iter->newL = true;
+		}																	// if ch is a newline char
 		else {
 			iter->str->Append(ch);											// insert a ch at curr string index
 			++iter->currIn;

@@ -38,7 +38,7 @@ namespace Comet {
       e_man->Append(e_doc->buffer[i]);
     }
     this->Display ();
-    move (e_currLine, e_currIndex);
+    move (0, 0);
   }
 
     // Call line manager display function to write contents of document to ncurses
@@ -103,7 +103,7 @@ namespace Comet {
       default: {                                             // if letter TODO: specify if alpha char
         e_man->InsertChar(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
         this->Display();                                     // update state of ncurses windows
-        move (e_currLine, ++e_currIndex);                    // move cursor to next index
+        move (e_currLine, e_currIndex += 1);                    // move cursor to next index
         break;
       }
     }
