@@ -4,13 +4,13 @@
 #include <iostream>
 
 //#define NULL ( (void *) 0)
-#define COMET_STRING_VERSION     0.1.0
+#define COMET_STRING_VERSION     0.1.1
 #define CASEDIFF                 32
 #define CAP_BEG                  65
 #define CAP_END                  90
 #define LOW_BEG                  97
 #define LOW_END                  122
-#define OFLW_SIZE                1
+#define REALLOC_BY               10
 
 namespace Comet {
     class String {
@@ -48,7 +48,6 @@ namespace Comet {
 
             // Public Accessors
             int     Length    ()                   const;
-            char    Overflow  ()                   const;
             char*   GetBuff   ()                   const;
 
             // Public Mutators
@@ -66,13 +65,12 @@ namespace Comet {
             bool    Lower         (int);
             bool    Lower         (int, int);
             void    Concat        (const String&);
-            String Substr        (int, int);
+            String  Substr        (int, int);
 
         private:
             // Private Data Members
             mutable 
             int     iter;
-            char    overflow[OFLW_SIZE];
             char*   s_buf;
             int     s_bLen;
             int     s_sLen;
@@ -81,7 +79,8 @@ namespace Comet {
             void    Alloc         (int);
             void    Dealloc       ();
             void    Term          ();
-            void    Fill          (const char*);
+            void    FillFrom      (const char*);
+            void    FillTo        (char*) const;
             void    Concat        (const char*, const char*);
 
             // Private helper functions

@@ -51,7 +51,7 @@ namespace Comet {
                 //Term(); //DOES THIS EVEN WORK??
             }
             // assign buffer to assignee buffer
-            Fill(str.s_buf);
+            FillFrom(str.s_buf);
         }
         return *this;
     } // operator+(const String&)
@@ -68,7 +68,7 @@ namespace Comet {
             s_sLen = length;
             //Term();
         }
-        Fill(str);
+        FillFrom(str);
         return *this;
     }
 
@@ -218,10 +218,16 @@ namespace Comet {
     }
 
     // fill buffer with c-string
-    void String::Fill(const char* str) {
+    void String::FillFrom(const char* str) {
         for (iter = 0; iter < s_sLen; iter++) {
             this->s_buf[iter] = str[iter];
         }
+    }
+
+    void String::FillTo(char* str) const {
+        for (iter = 0; iter < s_sLen; iter++) {
+            str[iter] = this->s_buf[iter];
+        }       
     }
 
     // TODO: HANDLE OUT OF RANGE
@@ -322,43 +328,67 @@ namespace Comet {
         s_sLen = ((in2 - in1) + 1);
     }*/
 
+    // Append a character to the end of the string
     void String::Append(char ch) {
+        // if string length doesn't already equal buffer length
         if (s_sLen < s_bLen) {
-            s_sLen += 1;
-            s_buf[(s_sLen - 1)] = ch;
+            s_sLen += 1;                                                       // increase string length
+            s_buf[(s_sLen - 1)] = ch;                                          // insert char at empty space on end
         }
+        // increasing string length will result in out of bounds so realloc
         else {
-            char* t_buf = new char[s_bLen + 1];
-            t_buf[s_bLen] = '\0';
-            Alloc(s_bLen + 10);
-            Fill(t_buf);
-            delete t_buf;
+            int sLength = s_sLen + 1;                                          // store original string length
+            int bLength = s_bLen + REALLOC_BY;                                 // new buffer length will be buffer length
+                                                                               // plus desired reallocation modifier   
+            char* t_buf = new char[bLength + 1];                               // alloc temp char buffer with new length
+            t_buf[bLength] = '\0';                                             // null terminate end
+            FillTo(t_buf);                                                     // fill temp buffer with contents of string
+            t_buf[s_bLen] = ch;                                                // now append ch to temp buffer
+            Alloc(bLength);                                                    // realloc string
+            s_sLen = sLength;                                                  // update string length
+            FillFrom(t_buf);                                                   // now refill string with appended contents
+            delete t_buf;                                                      // cleanup temporary buffer
         }
-    }
+    } // APPEND(CHAR)
 
+    // insert a char at a specified index
     bool String::Insert(int in, char ch) {
-		bool of = false;
-        if ((s_sLen + 1) < s_bLen) {
-            ++s_sLen;
+        // make sure index is within bounds
+        if (in >= 0 && in < s_sLen) {
+            // must reallocate if insert a char will cause overflow
+            if ((s_sLen + 1) > s_bLen) {
+                int sLength = s_sLen;                                           // maintain string length
+                int bLength = s_bLen + REALLOC_BY;                              // buffer length is orig buff plus modifier
+                char* t_buf = new char[bLength + 1];                            // allocate a tempory buffer to store string contents
+                t_buf[bLength] = '\0';                                          // null terminate temp buff
+                FillTo(t_buf);                                                  // fill temporary buffer with string contents
+                Alloc(bLength);                                                 // reallocate string
+                s_sLen = sLength;                                               // restore string length after reallocation
+                FillFrom(t_buf);                                                // fill string from buffer
+                delete t_buf;                                                   // cleanup buffer
+            }
+            ++s_sLen;                                                           // increment string length by 1
+            for (iter = (s_sLen - 1); iter > in; iter--) {
+                s_buf[iter] = s_buf[iter - 1];                                  // shift all contents to right of index
+            }
+            s_buf[in] = ch;                                                     // now insert char
         }
+        // TODO: OUT OF INDEX HANDLE
         else {
-            overflow[0] = s_buf[s_sLen - 1];
-			of = true;
+            return 0;
         }
-        for (iter = (s_sLen - 1); iter > in; iter--) {
-            s_buf[iter] = s_buf[iter - 1];
-        }
-        s_buf[in] = ch;
-		return of;
-    }
+        return 1;
+    } // INSERT(INT, CHAR)
 
-    //
+    // Capitalize every letter in the string
     bool String::Upper() {
+        // call overloaded Upper() with range of entire string
         return this->Upper(0, (s_sLen - 1));
-    }
+    } // UPPER
 
     // capitalize specific character
     bool String::Upper(int in) {
+        // call overloaded Upper() with range of in to in (one char)
         return this->Upper(in, in);
     }
 
@@ -405,10 +435,6 @@ namespace Comet {
     // Public accessors
     int String::Length() const {
         return s_sLen;
-    }
-
-    char String::Overflow() const {
-        return overflow[0];
     }
 
     char* String::GetBuff() const {
