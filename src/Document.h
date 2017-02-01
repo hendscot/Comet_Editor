@@ -3,20 +3,19 @@
 class FileHandler;
 class Document {
 public:
-  Document  ();
-  ~Document ();
-  void LoadDocument(const char*);
-  char* buffer;
+  Document                                         ();
+  ~Document                                        ();
+  bool LoadDocument                                (const char*);
+  bool SaveDocumentAs                              (const char*);
+  bool SaveDocument                                ();
+  char*                                            buffer;
 
-  unsigned GetSize();
+  // PUBLIC ACCESSORS
+  unsigned                                         GetSize();
 
 private:
-  FileHandler* FH;
-  unsigned bufSize;
+  FileHandler*                                     FH;
+  unsigned                                         bufSize;
+  int                                              status;
 };
-
-
-
-
-
 #endif // DOCUMENT_H
