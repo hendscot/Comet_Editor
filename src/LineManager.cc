@@ -79,33 +79,21 @@ namespace Comet {
 	}
 
 	void LineManager::DeleteLine(LPTR LN) {
-		if (LN->lineAmnt > 1) {
-			if (1) {
-				if (LN->size > 0){
-					if (ConcatLines(LN) == 0) {
-		        		if (LN != l_end) {
-							LN->prev->next = LN->next;
-							delete LN;
-						}
-						else {
-							l_end = LN->prev;
-							l_end->next = LN->next;
-							delete LN;
-						}
-					}
-				}
-				else {
-					if (LN != l_end) {
-						LN->prev->next = LN->next;
-						delete LN;
-					}
-					else {
-						l_end = LN->prev;
-						l_end->next = LN->next;
-						delete LN;
-					}
-				}
+		if (LN == l_end) {
+			if (LN->Length() > 0) {
+				ConcatLines(LN);
 			}
+			l_end = LN->prev;
+			l_end->next = l_strt;
+			delete LN;
+		}
+		else if (LN != l_strt && LN != l_end) {
+			if (LN->Length() > 0) {
+				ConcatLines(LN);
+			}
+			LN->prev->next = LN->next;
+			LN->next->prev = LN->prev;
+			delete LN;
 		}
 	}
 

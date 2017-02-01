@@ -2,6 +2,7 @@
 #define EDITORCORE_H
 #include "Document.h"
 #include "LineManager.h"
+#define  ENTER 10
 namespace Comet {
     class EditorCore {
     public:
@@ -11,12 +12,9 @@ namespace Comet {
         void         Load              (const char*);  // Call Document class LoadDocument method which loads file state into a doc buffer
     protected:
         bool         e_shouldClose;                    // State variable that alerts system loop to end
-
-
         void         Init              ();             // Initialize ncurses and private members
         void         Poll              ();
         void         Save              ();             // Save current file state
-        void         Delete            (int, int);     // Interface for LineMan Deletechar method (deletes specified index at current line)
         
     // BEGIN PRIVATE DATA
     private:
@@ -31,6 +29,8 @@ namespace Comet {
         // PRIVATE METHODS
         void         Display           ();             // Call LineMan class Display method, loads state of file into ncurses window after change
         void         HandleInput       ();
+        void         Insert            (int, int, char);
+        void         Delete            (int, int);     // Interface for LineMan Deletechar method (deletes specified index at current line)
     };
 }
 #endif // EDITORCORE_H

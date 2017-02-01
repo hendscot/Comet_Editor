@@ -1,3 +1,8 @@
+/************************************************
+COMET GHOST TEXT EDITOR Ver. 0.0.1
+Written by: Scott Henderson
+Last Update: Jan 31 2017
+*************************************************/
 #include <iostream>
 #include "Editor.h"
 

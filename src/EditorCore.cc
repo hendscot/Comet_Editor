@@ -41,6 +41,10 @@ namespace Comet {
     move (0, 0);
   }
 
+  void EditorCore::Save () {
+    e_doc->SaveDocument(e_path);
+  }
+
     // Call line manager display function to write contents of document to ncurses
     void EditorCore::Display () {
         clear ();                                       // clear previous contents TODO: IS THIS EFFICIENT?
@@ -81,8 +85,9 @@ namespace Comet {
         }
         break;
       }
-      case KEY_LEFT: {                             // if left arrow key
-        move (e_currLine, --e_currIndex);          // move cursor left one index
+      case KEY_LEFT: {   
+        if (e_currIndex > 0)                          // if left arrow key
+          move (e_currLine, --e_currIndex);          // move cursor left one index
         break;
       }
       case KEY_BACKSPACE: {                               
@@ -100,8 +105,18 @@ namespace Comet {
             
         break;
       }
+      case ENTER: {
+        e_man->InsertChar(e_currLine, e_currIndex, e_key);
+        this->Display();
+        move (++e_currLine, (e_currIndex = 0));
+        break;
+      }
+      case KEY_SLEFT: {
+        Save();     
+        break;
+      }
       default: {                                             // if letter TODO: specify if alpha char
-        e_man->InsertChar(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
+        Insert(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
         this->Display();                                     // update state of ncurses windows
         move (e_currLine, e_currIndex += 1);                    // move cursor to next index
         break;
@@ -111,6 +126,10 @@ namespace Comet {
 
     // Delete current index of current liner TODO
   void EditorCore::Delete (int ln, int in) {
-    e_man->DeleteChar(e_currLine, in);
+    e_man->DeleteChar(ln, in);
   } // DELETE (INT, INT)
+
+  void EditorCore::Insert (int line, int indx, char ch) {
+    e_man->InsertChar(line, indx, ch);
+  }
 }
