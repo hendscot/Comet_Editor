@@ -1,13 +1,10 @@
 #include <iostream>
-#include "String.h"
+#include "FileHandler.h"
 
 int main (int argc, char*argv[]) {
-	Comet::String str(2);
-
-	str.Insert(0, 'o');
-	str.Insert(0, 'l');
-
-	std::cout << str << std::endl;
+	FileHandler fh;
+	fh.Read("./test.txt");
+	fh.Write("t.txt");
 
 	return 1;
 }

@@ -181,7 +181,15 @@ namespace Comet {
     // TODO : ERROR HANDLING
     void String::Concat(const String& str) {
         if (str.s_sLen > (this->s_bLen - this->s_sLen)) {
-
+            /*int sLength = (s_sLen + str.s_s_len);
+            int bLength = (s_bLen + str.s_bLen);
+            char* t_buf = new char[bLength + 1];
+            t_buf[bLength] = '\0';
+            FillTo(t_buf, 0, this->s_sLen);
+            str.FillTo(t_buf, this->s_sLen, str.s_sLen);
+            Alloc(bLength);
+            s_sLen = sLength;
+            FillFrom(t_buf, 0, ??);*/
         }
         else {
             for (int i = 0, iter = s_sLen; i < str.s_sLen; iter++, i++) {
@@ -355,7 +363,7 @@ namespace Comet {
     bool String::Insert(int in, char ch) {
         // make sure index is within bounds
         if (in >= 0 && in < s_sLen) {
-            // must reallocate if insert a char will cause overflow
+            // must reallocate if inserting a char will cause overflow
             if ((s_sLen + 1) > s_bLen) {
                 int sLength = s_sLen;                                           // maintain string length
                 int bLength = s_bLen + REALLOC_BY;                              // buffer length is orig buff plus modifier

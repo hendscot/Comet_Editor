@@ -12,7 +12,7 @@ FileHandler::~FileHandler() {
 }
 
 char* FileHandler::Read (const char* path) {
-  FH_doc = fopen (path, "rt");
+  FH_doc = fopen (path, "rb");
   if (FH_doc == NULL) perror("ERROR"); // TODO handle if file not opened
   fseek (FH_doc, 0, SEEK_END);
   FH_docLen = ftell (FH_doc);
@@ -22,6 +22,12 @@ char* FileHandler::Read (const char* path) {
   fread (buffer, 1, FH_docLen, FH_doc); // TODO store return code in var
   fclose(FH_doc);
   return buffer;
+}
+
+// WORKING BUT THIS IS PLACEHOLDER CODE (NEED SOME WAY TO PRINT LINES FROM DOC)
+void FileHandler::Write (const char* path) {
+  FH_doc = fopen (path, "wb");
+  fwrite (buffer, 1, FH_docLen, FH_doc);
 }
 
 unsigned FileHandler::GetLength(){
