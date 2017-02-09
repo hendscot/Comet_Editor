@@ -1,4 +1,5 @@
 #include "EditorCore.h"
+#include "Menu.h"
 #include <ncurses.h>
 namespace Comet {
 
@@ -15,15 +16,18 @@ namespace Comet {
 
       // Initialize members and ncurses
   void EditorCore::Init () {
-    initscr            ();                         // initialize ncurses!
-    cbreak             ();                         // 
-    noecho             ();                         // disable ncurses key echo
-    keypad             (stdscr, true);             // enable ncurses special keys
+    initscr             ();                         // initialize ncurses!
+    cbreak              ();                         // 
+    noecho              ();                         // disable ncurses key echo
+    keypad              (stdscr, true);             // enable ncurses special keys
     e_doc              = new Document;             // Create new document object
     e_man              = new LineManager;          // create new LineMan object
     e_shouldClose      = false;                    // set shouldClose state to false
     e_currLine         = 0;                        // default line is 0
     e_currIndex        = 0;                        // default index is 0
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    attron(COLOR_PAIR(1));
   } // INIT ()
 
   void EditorCore::Poll () {
@@ -42,7 +46,6 @@ namespace Comet {
   }
 
   void EditorCore::Save () {
-    e_doc->SaveDocument(e_path);
   }
 
     // Call line manager display function to write contents of document to ncurses
@@ -116,10 +119,19 @@ namespace Comet {
         break;
       }
       default: {                                             // if letter TODO: specify if alpha char
-        Insert(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
-        this->Display();                                     // update state of ncurses windows
-        move (e_currLine, e_currIndex += 1);                    // move cursor to next index
-        break;
+        if (e_currIndex < e_man->GetLength(e_currLine)) {
+          Insert(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
+          this->Display();                                     // update state of ncurses windows
+          move (e_currLine, e_currIndex += 1);                    // move cursor to next index
+          break;
+        }
+        /*TODO THIS NEEDS TO APPEND*/
+        else {
+          e_man->Append(e_key, e_currLine);
+          this->Display();
+          move (e_currLine, e_currIndex += 1);
+          break;
+        }
       }
     }
   } // HANDLEINPUT ()

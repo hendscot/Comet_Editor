@@ -11,6 +11,7 @@ namespace Comet {
         LineManager();                                               // no param constructor
         ~LineManager();                                              // destructor
         void Append(char);                                           // Append char to latest index
+        void Append(char, int);
         void Display();                                              // SHOULD PROBABLY REMOVE THIS 
         void DeleteChar(int, int);                                   // Delete char from target at line at target index
         void InsertChar(int, int, char);                             // Insert char to target line at target index

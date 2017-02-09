@@ -8,7 +8,7 @@ LINK = -lncurses
 all: main
 
 main: FileHandler.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
-	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
+	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)Menu.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
 
 FileHandler.o: $(UTILS)FileHandler.cc $(UTILS)FileHandler.h
 	$(GCC) -c -o $(OBJ)FileHandler.o $(UTILS)FileHandler.cc
@@ -27,6 +27,9 @@ EditorCore.o: $(SRC)EditorCore.h $(SRC)EditorCore.cc
 
 Editor.o: $(SRC)Editor.h $(SRC)Editor.cc
 	$(GCC) -c -o $(OBJ)Editor.o $(SRC)Editor.cc $(LINK)
+
+Menu.o: $(SRC)Menu.h $(SRC)Menu.cc
+	$(GCC) -c -o $(OBJ)Menu.o $(SRC)Menu.cc $(Link)
 
 String.o: $(UTILS)String.cc $(UTILS)String.h
 	$(GCC) -c -o $(OBJ)String.o $(UTILS)String.cc

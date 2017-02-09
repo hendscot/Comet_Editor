@@ -36,7 +36,7 @@ namespace Comet {
 	void LineManager::InsertChar(int ln, int in, char ch) {
 		int i;
 		LPTR iter = l_strt;                                                          // iterate lines from beginning
-		for (i = 0; i < ln; iter = iter->next, i++);     // iterate while not at target line and 
+		for (i = 0; i < ln; iter = iter->next, i++);     							 // iterate while not at target line and 
 		if (i == ln) {
 			iter->str->Insert(in, ch);
 			++iter->size;
@@ -60,6 +60,16 @@ namespace Comet {
 		else {
 			iter->str->Append(ch);											// insert a ch at curr string index
 			++iter->currIn;
+			++iter->size;
+		}
+	}
+
+	void LineManager::Append(char ch, int ln) {
+		int i;
+		LPTR iter = l_strt;                                                          // iterate lines from beginning
+		for (i = 0; i < ln; iter = iter->next, i++);     							 // iterate while not at target line and 
+		if (i == ln) {
+			iter->str->Append(ch);
 			++iter->size;
 		}
 	}
