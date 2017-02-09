@@ -15,7 +15,7 @@ namespace Comet {
         void Display();                                              // SHOULD PROBABLY REMOVE THIS 
         void DeleteChar(int, int);                                   // Delete char from target at line at target index
         void InsertChar(int, int, char);                             // Insert char to target line at target index
-        void InsertLine();                                           // insert a new line
+        void InsertLineAfter(LPTR);                                  // insert a new line
         void DeleteLine(LPTR);                                       // delete a given line
         int  GetLength (int);
         int  GetLineCount ();
@@ -24,7 +24,8 @@ namespace Comet {
     // BEGIN PRIVATE DATA
     private:
         LPTR l_strt;                                                 // Maintain first line
-        LPTR l_end;                                                  // Maintaine last line
+        LPTR l_end;                                                  // Maintain last line
+        LPTR l_iter;                                                 // Used for iterating through list
         void Newline();                                              // create a new line at end of line list
         bool NoLines();                                              // check if any lines exist
         bool Full(LPTR);                                             // check if line is at max defined capacity

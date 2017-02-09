@@ -109,7 +109,7 @@ namespace Comet {
         break;
       }
       case ENTER: {
-        e_man->InsertChar(e_currLine, e_currIndex, e_key);
+        e_man->InsertBreak(e_currLine, e_currIndex, e_key);
         this->Display();
         move (++e_currLine, (e_currIndex = 0));
         break;
@@ -123,15 +123,13 @@ namespace Comet {
           Insert(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
           this->Display();                                     // update state of ncurses windows
           move (e_currLine, e_currIndex += 1);                    // move cursor to next index
-          break;
         }
-        /*TODO THIS NEEDS TO APPEND*/
         else {
           e_man->Append(e_key, e_currLine);
           this->Display();
           move (e_currLine, e_currIndex += 1);
-          break;
         }
+        break;
       }
     }
   } // HANDLEINPUT ()

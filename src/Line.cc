@@ -37,4 +37,8 @@ namespace Comet {
     int Line::Length () {
         return size;
     }
+
+    int Line::End( () {
+        return (size - 1);
+    }
 } // END NAMESPACE COMET
