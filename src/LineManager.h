@@ -12,13 +12,12 @@ namespace Comet {
         ~LineManager();                                              // destructor
         void Append(char);                                           // Append char to latest index
         void Append(char, int);
-        void Display();                                              // SHOULD PROBABLY REMOVE THIS 
         void DeleteChar(int, int);                                   // Delete char from target at line at target index
         void InsertChar(int, int, char);                             // Insert char to target line at target index
-        void InsertLineAfter(LPTR);                                  // insert a new line
-        void DeleteLine(LPTR);                                       // delete a given line
+        void InsertBreak(int, int);
         int  GetLength (int);
         int  GetLineCount ();
+        LPTR First        ();
     // END PUBLIC DATA
 
     // BEGIN PRIVATE DATA
@@ -27,6 +26,9 @@ namespace Comet {
         LPTR l_end;                                                  // Maintain last line
         LPTR l_iter;                                                 // Used for iterating through list
         void Newline();                                              // create a new line at end of line list
+        void InsertLineAfter(LPTR);                                  // insert a new line
+        void InsertLineBefore(LPTR);
+        void DeleteLine(LPTR);                                       // delete a given line
         bool NoLines();                                              // check if any lines exist
         bool Full(LPTR);                                             // check if line is at max defined capacity
         void SelfDestruct ();

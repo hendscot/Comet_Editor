@@ -48,13 +48,6 @@ namespace Comet {
   void EditorCore::Save () {
   }
 
-    // Call line manager display function to write contents of document to ncurses
-    void EditorCore::Display () {
-        clear ();                                       // clear previous contents TODO: IS THIS EFFICIENT?
-        e_man->Display ();                              // write contents to ncurses window
-        refresh ();
-    } // DISPLAY ()
-
  // Method to acquire and handle user input
   void EditorCore::HandleInput () {
     e_key = getch();                               // store value of key entered by user in e_key var
@@ -142,4 +135,18 @@ namespace Comet {
   void EditorCore::Insert (int line, int indx, char ch) {
     e_man->InsertChar(line, indx, ch);
   }
+
+    void EditorCore::Display () {
+      clear ();
+      if (l_strt){
+        LPTR l_iter = e_man->First();
+        do {
+          // test if this will work?
+          printw(l_iter->str->GetBuff());
+          printw("\n");
+          l_iter = l_iter->next;
+        } while (l_iter != l_strt && l_iter != NULL);
+      }
+      refresh ();
+	} // DISPLAY ()
 }

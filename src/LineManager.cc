@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <iostream>
-#include <ncurses.h>
 #include "Line.h"
 #include "LineManager.h"
 
@@ -162,19 +161,6 @@ namespace Comet {
 		}
 	} // DELETELINE (LPTR)
 
-	void LineManager::Display () {
-		if (l_strt){
-		l_iter = l_strt;
-		do {
-			// test if this will work?
-			printw(l_iter->str->GetBuff());
-			printw("\n");
-			l_iter = l_iter->next;
-		} while (l_iter != l_strt && l_iter != NULL);
-		}
-	} // DISPLAY ()
-
-
 	bool LineManager::Full(LPTR ln) {
 		if (ln->currIn >= STR_SIZE || ln->str[ln->currIn] == '\n')
 			return true;
@@ -227,4 +213,8 @@ namespace Comet {
 			}
 		}
 	} // CONCATLINES (LPTR)
+
+	LPTR LineManager::First() {
+		if (!NoLines()) return l_strt;
+	}
 }
