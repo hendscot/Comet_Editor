@@ -49,14 +49,16 @@ namespace Comet {
             char&   operator  []  (const int)      const;
 
             // Public Accessors
-            int     Length    ()                   const;
-            int     End       ()                   const;
-            char*   GetBuff   ()                   const;
+            int     End         ()                 const;
+            int     Length      ()                 const;
+            char*   GetBuff     ()                 const;
+            char    CharAt      (int)              const;
 
             // Public Mutators
             void    Replace       (int, char);
             void    Replace       (int, int, const char*);
             void    Append        (char);
+            void    Prepend       (char);
             bool    Insert        (int, char);
             void    Delete        (int);
             void    Delete        (int, int);

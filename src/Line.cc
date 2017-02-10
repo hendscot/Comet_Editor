@@ -39,6 +39,14 @@ namespace Comet {
     }
 
     int Line::End () {
-        return (size - 1);
+        return (Length() - 1);
+    }
+
+    bool Line::IsOF () {
+        return str->Overflowed();
+    }
+
+    char Line::PopOF () {
+        return str->GetOverflow();
     }
 } // END NAMESPACE COMET

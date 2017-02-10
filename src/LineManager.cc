@@ -73,7 +73,16 @@ namespace Comet {
 		l_iter = l_strt;                                                          // iterate lines from beginning
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // iterate while not at target line and 
 		if (i == ln) {
-			l_iter->str->Insert(in, ch);										  // insert char at desired loc
+													  // insert char at desired loc
+			if (!Full(l_iter)) {
+				l_iter->str->Insert(in, ch);
+			}
+			else {
+				InsertLineAfter(l_iter);
+				(l_iter + 1)->str->Prepend(l_iter->str->CharAt(l_iter->str->End()));
+				l_iter->str->Delete(l_iter->str->End());
+				++l_iter;
+			}
 			++l_iter->size;
 		}
 	} // INSERTCHAR (INT, INT, CHAR)
@@ -114,9 +123,15 @@ namespace Comet {
 		}
 		if (ch == '\n') {
 			l_iter->newL = true;
-		}																	// if ch is a newline char
+		}																	        // if ch is a newline char
 		else {
-			l_iter->str->Append(ch);											// insert a ch at curr string index
+			if (!Full(l_iter))
+				(l_iter->str->Append(ch);											// insert a ch at curr string index
+			else {
+				InsertLineAfter(l_iter);
+				++l_iter;
+				l_iter->str->Append(ch);
+			}
 			++l_iter->currIn;
 			++l_iter->size;
 		}
@@ -125,9 +140,14 @@ namespace Comet {
 	void LineManager::Append(char ch, int ln) {
 		int i;
 		l_iter = l_strt;                                                          // l_iterate lines from beginning
-		for (i = 0; i < ln; l_iter = l_iter->next, i++);     							 // l_iterate while not at target line and 
+		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // l_iterate while not at target line and 
 		if (i == ln) {
-			l_iter->str->Append(ch);
+			if (!Full(l_iter)) l_iter->str->Append(ch);
+			else {
+				InsertLineAfter(l_iter);
+				++l_iter;
+				l_iter->str->Append(ch);
+			}
 			++l_iter->size;
 		}
 	} // APPEND(CHAR, INT)
@@ -166,10 +186,7 @@ namespace Comet {
 	} // DELETELINE (LPTR)
 
 	bool LineManager::Full(LPTR ln) {
-		if (ln->currIn >= STR_SIZE || ln->str[ln->currIn] == '\n')
-			return true;
-		else
-			return false;
+		(ln->Length() >= STR_SIZE) ? true : false;
 	}
 
 	bool LineManager::NoLines() {

@@ -309,55 +309,49 @@ namespace Comet {
 
     // replace specified range with a new string
     void String::Replace(int b_In, int e_In, const char* str) {
+        // first get length of cstring
         int slen = len(str);
-        if (b_In >= 0 && b_In < s_sLen && e_In >= 0 && e_In < s_sLen) {
-            if (b_In <= e_In) {
-                for (int i = 0, iter = b_In; iter <= e_In && i < slen; ++iter, ++i) {
-                    this->s_buf[iter] = str[i];
-                }
+        // if indices are within bounds and in order
+        if (b_In >= 0 && e_In < s_sLen && b_In <= e_In) {
+            // iterate starting at b_in and beginning of cstring
+            for (int i = 0, iter = b_In; iter <= e_In && i < slen; ++iter, ++i) {
+                this->s_buf[iter] = str[i];
             }
         }
-    }
+    } // Replace (int, int, const char*)
 
+    // Delete a single char *calls overloaded delete for deleting range
     void String::Delete(int in) {
+        // single character so range is in to in
         Delete(in, in);
     }
 
+    // Delete a range of characters from in1 to in2 inclusive!
     void String::Delete(int in1, int in2) {
-
+        // boundary checking
         if (in1 >= 0 && in1 <= in2 && in2 < s_sLen) {
+            int range = ((in2 - in1) + 1);
+            // first assign as much to range from left over after range as possible
             for (int i = in1, j = (in2 + 1); i <= in2, j < s_sLen; i++, j++) {
                 s_buf[i] = s_buf[j];
             }
-            for (int i = (s_sLen - ((in2 - in1) + 1)); i < s_sLen; i++) {
+            // now null terminate leftover for cases where range and leftover are not equal
+            for (int i = (s_sLen - range); i < s_sLen; i++) {
                 s_buf[i] = '\0';
             }
-            s_sLen -= ((in2 - in1) + 1);
+            // now update string length
+            s_sLen -= range;
         }
     }
 
     // Append a character to the end of the string
     void String::Append(char ch) {
-        // if string length doesn't already equal buffer length
-        if (s_sLen < s_bLen) {
-            s_sLen += 1;                                                       // increase string length
-            s_buf[(s_sLen - 1)] = ch;                                          // insert char at empty space on end
-        }
-        // increasing string length will result in out of bounds so realloc
-        else {
-            int sLength = s_sLen + 1;                                          // store original string length
-            int bLength = s_bLen + REALLOC_BY;                                 // new buffer length will be buffer length
-                                                                               // plus desired reallocation modifier   
-            char* t_buf = new char[bLength + 1];                               // alloc temp char buffer with new length
-            t_buf[bLength] = '\0';                                             // null terminate end
-            FillTo(t_buf);                                                     // fill temp buffer with contents of string
-            t_buf[s_bLen] = ch;                                                // now append ch to temp buffer
-            Alloc(bLength);                                                    // realloc string
-            s_sLen = sLength;                                                  // update string length
-            FillFrom(t_buf);                                                   // now refill string with appended contents
-            delete t_buf;                                                      // cleanup temporary buffer
-        }
+        Insert((s_sLen - 1), ch);
     } // APPEND(CHAR)
+
+    void String::Prepend(char ch) {
+        Insert(0, ch);
+    }
 
     // insert a char at a specified index
     bool String::Insert(int in, char ch) {
@@ -375,11 +369,17 @@ namespace Comet {
                 FillFrom(t_buf);                                                // fill string from buffer
                 delete t_buf;                                                   // cleanup buffer
             }
-            ++s_sLen;                                                           // increment string length by 1
-            for (iter = (s_sLen - 1); iter > in; iter--) {
-                s_buf[iter] = s_buf[iter - 1];                                  // shift all contents to right of index
+            if (s_sLen != 0){
+                ++s_sLen;                                                           // increment string length by 1
+                for (iter = (s_sLen - 1); iter > in; iter--) {
+                    s_buf[iter] = s_buf[iter - 1];                                  // shift all contents to right of index
+                }
+                s_buf[in] = ch;                                                     // now insert char
             }
-            s_buf[in] = ch;                                                     // now insert char
+            else {
+                ++s_sLen;
+                s_buf[0] = ch;
+            }
         }
         // TODO: OUT OF INDEX HANDLE
         else {
@@ -449,10 +449,13 @@ namespace Comet {
         return (s_sLen - 1);
     }
 
+    char String::CharAt(int in) const {
+        if (in >=0 && in < s_sLen) return s_buf[in];
+    }
+
     char* String::GetBuff() const {
         return s_buf;
     }
-
 
     // Print with help from a friend
     std::ostream& operator<<(std::ostream& ost, const String& str) {
