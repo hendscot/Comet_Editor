@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iostream>
+#include <ncurses.h>
 #include "Line.h"
 #include "LineManager.h"
 
@@ -35,7 +36,7 @@ namespace Comet {
 	// Can be used to attach to beginning or insert within
 	void LineManager::InsertLineBefore(LPTR LN) {
 		if (NoLines()) {											// if list is empty, just call Newline method
-			Newine();
+			Newline();
 		}
 		else if (LN == l_strt) {									// if need to insert before a given line and line is first line
 			LPTR newL = new Line;									// this won't likely happen for this use, but to be safe...
@@ -59,10 +60,11 @@ namespace Comet {
 			Newline();
 		}
 		else {
-			LPTR newL = new Line;									// we must be in the middle so just rearrange pointers...
-			newL->prev = LN;
-			newL->next = LN->next;
-			LN->next = newL;
+			LPTR newL               = new Line;					    // we must be in the middle so just rearrange pointers...
+			newL->prev              = LN;
+			newL->next              = LN->next;
+			newL->next->prev        = newL;
+			LN->next                = newL;
 		}
 	} // INSERTLINEAFTER (LPTR)
 	// TODO: INSERT CODE TO PREVENT ACCESS OF NONEXISTENT LINE NUMBER (POSSIBLY CALL NEWLINE METHOD?)
@@ -82,17 +84,19 @@ namespace Comet {
 		l_iter = l_strt;
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);
 		if (i == ln) {
-			if (in < (l_iter->End()) {                                             // if not at end of line will have to move remaining
+			if (in <= (l_iter->End())) {                                             // if not at end of line will have to move remaining
 				InsertLineAfter(l_iter);										   // chars to next line
 				l_iter = l_iter->next;
 				l_iter->str->Concat(l_iter->prev->str->Substr(in, l_iter->prev->End()));
-				l_iter->prev->str->DeleteRange(in, l_iter->prev->End());
+				l_iter->size = l_iter->Length();
+				//l_iter->prev->str->DeleteRange(in, l_iter->prev->End());
+				
 			}
 			else {
 				InsertLineAfter(l_iter);
-				iter = iter->next;
+				l_iter = l_iter->next;
 			}
-			iter->newL = true;
+			l_iter->newL = true;
 		} 
 	} // INSERTBREAK (INT, INT, CH)
 	// TODO: ADD METHOD FOR INSERTING ENTIRE STRINGS FOR LESS FUNCTION CALLS
@@ -170,7 +174,7 @@ namespace Comet {
 
 	bool LineManager::NoLines() {
 		return (!l_strt);
-	} // FULL (LPTR)
+	} // 
 
 	void LineManager::SelfDestruct () {
 		if (l_strt != NULL) {
@@ -214,7 +218,19 @@ namespace Comet {
 		}
 	} // CONCATLINES (LPTR)
 
-	LPTR LineManager::First() {
+	Line* LineManager::First() {
 		if (!NoLines()) return l_strt;
 	}
+
+	void LineManager::Display () {
+      if (l_strt){
+        l_iter = l_strt;
+        do {
+          // test if this will work?
+          printw(l_iter->str->GetBuff());
+          printw("\n");
+          l_iter = l_iter->next;
+        } while (l_iter != l_strt && l_iter != NULL);
+      }
+	} // DISPLAY ()
 }

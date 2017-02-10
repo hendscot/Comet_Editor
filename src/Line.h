@@ -12,7 +12,7 @@ namespace Comet {
         Line                           ();                 // No parameter constructor
         Line                           (const Line&);      // Copy constructor to create duplicate liner
         ~Line                          ();                 // Destructor
-        
+        int End                        ();
         int 
         Length                         ();                 // Return string length
     // END PUBLIC DATA

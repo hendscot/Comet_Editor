@@ -17,7 +17,8 @@ namespace Comet {
         void InsertBreak(int, int);
         int  GetLength (int);
         int  GetLineCount ();
-        LPTR First        ();
+        void Display();
+        Line* First        ();
     // END PUBLIC DATA
 
     // BEGIN PRIVATE DATA

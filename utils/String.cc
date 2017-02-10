@@ -194,8 +194,8 @@ namespace Comet {
         else {
             for (int i = 0, iter = s_sLen; i < str.s_sLen; iter++, i++) {
                 this->s_buf[iter] = str.s_buf[i];
+                ++s_sLen;
             }
-            this->s_sLen += str.s_sLen;
         }
     }
 
@@ -325,6 +325,12 @@ namespace Comet {
         }
         s_sLen -= 1;
     }
+
+    /*void String::DeleteRange(int in1, int in2) {
+        if ((in2) < s_sLen) {
+           for (iter = in2; 
+        }
+    }*/
 
     /*void String::Delete(int in1, int in2) {
         for (int i = in1, j = (in2 + 1); i < in2, j < s_sLen; i++, j++) {

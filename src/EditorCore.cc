@@ -75,6 +75,14 @@ namespace Comet {
         }
         break;
       }
+      case TAB: {
+        for (int i = 0; i < 4; i++) {
+          Insert(e_currLine, e_currIndex++, ' ');
+        }
+        this->Display();
+        move (e_currLine, e_currIndex);
+        break;
+      }
       case KEY_RIGHT: {                            // if right arrow key
         if ((e_currIndex) < e_man->GetLength(e_currLine)) {
           move (e_currLine, ++e_currIndex);          // move cursor right one index
@@ -102,7 +110,7 @@ namespace Comet {
         break;
       }
       case ENTER: {
-        e_man->InsertBreak(e_currLine, e_currIndex, e_key);
+        e_man->InsertBreak(e_currLine, e_currIndex);
         this->Display();
         move (++e_currLine, (e_currIndex = 0));
         break;
@@ -138,15 +146,7 @@ namespace Comet {
 
     void EditorCore::Display () {
       clear ();
-      if (l_strt){
-        LPTR l_iter = e_man->First();
-        do {
-          // test if this will work?
-          printw(l_iter->str->GetBuff());
-          printw("\n");
-          l_iter = l_iter->next;
-        } while (l_iter != l_strt && l_iter != NULL);
-      }
+      e_man->Display();
       refresh ();
 	} // DISPLAY ()
 }

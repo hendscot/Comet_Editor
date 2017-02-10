@@ -3,6 +3,7 @@
 #include "Document.h"
 #include "LineManager.h"
 #define  ENTER 10
+#define  TAB   9
 namespace Comet {
     class EditorCore {
     public:

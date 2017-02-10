@@ -35,10 +35,10 @@ namespace Comet {
     } // Line ()    
     
     int Line::Length () {
-        return size;
+        return str->Length();
     }
 
-    int Line::End( () {
+    int Line::End () {
         return (size - 1);
     }
 } // END NAMESPACE COMET
