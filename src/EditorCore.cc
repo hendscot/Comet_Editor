@@ -50,7 +50,7 @@ namespace Comet {
 
  // Method to acquire and handle user input
   void EditorCore::HandleInput () {
-    e_key = getch();                               // store value of key entered by user in e_key var
+    e_key = getch();                               // store value of key E_ENTERed by user in e_key var
     switch (e_key) {                               // handle input based on value defined by ncurses
       case KEY_UP: {                               // if up arrow key
         if (e_currLine > 0) {                      // move cursor up one line if not yet on first line
@@ -75,9 +75,18 @@ namespace Comet {
         }
         break;
       }
-      case TAB: {
-        for (int i = 0; i < 4; i++) {
-          Insert(e_currLine, e_currIndex++, ' ');
+      case E_TAB: {
+        if (e_currIndex < e_man->GetLength(e_currLine)) {
+          for (int i = 0; i < E_TAB_SIZE; i++) {
+            Insert(e_currLine, e_currIndex++, E_SPACE);
+          }
+        }
+        else {
+          for (int i = 0; i < E_TAB_SIZE; i++) {
+            // TODO FIND WAY TO FIX INSERT TO REMOVE APPEND
+            Append(E_SPACE, e_currLine);
+            ++e_currIndex;
+          }
         }
         this->Display();
         move (e_currLine, e_currIndex);
@@ -109,7 +118,7 @@ namespace Comet {
             
         break;
       }
-      case ENTER: {
+      case E_ENTER: {
         e_man->InsertBreak(e_currLine, e_currIndex);
         this->Display();
         move (++e_currLine, (e_currIndex = 0));

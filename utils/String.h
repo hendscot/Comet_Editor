@@ -5,12 +5,12 @@
 
 //#define NULL ( (void *) 0)
 #define COMET_STRING_VERSION     0.1.1
-#define CASEDIFF                 32
-#define CAP_BEG                  65
-#define CAP_END                  90
-#define LOW_BEG                  97
-#define LOW_END                  122
-#define REALLOC_BY               10
+#define CASEDIFF                 0x0020
+#define CAP_BEG                  0x0041
+#define CAP_END                  0x005A
+#define LOW_BEG                  0x0061
+#define LOW_END                  0x007A
+#define REALLOC_BY               0x000A
 
 namespace Comet {
     class String {
@@ -28,10 +28,12 @@ namespace Comet {
             // operator overloads
             String& operator  =   (const String&);
             String& operator  =   (const char*);
+            /*************** TODO ! ***********/
             String  operator  +   (const char*);
             String  operator  +=  (const String&);
             String  operator  +=  (const char*);
-            String  operator  +   (const String&);            
+            String  operator  +   (const String&);
+            /**********************************/            
             bool    operator  ==  (const String&)  const;
             bool    operator  ==  (const char*)    const;
             bool    operator  !=  (const String&)  const;
@@ -48,6 +50,7 @@ namespace Comet {
 
             // Public Accessors
             int     Length    ()                   const;
+            int     End       ()                   const;
             char*   GetBuff   ()                   const;
 
             // Public Mutators

@@ -320,27 +320,21 @@ namespace Comet {
     }
 
     void String::Delete(int in) {
-        for (iter = (in + 1); iter <= s_sLen; iter++) {
-            s_buf[iter - 1] = s_buf[iter];
-        }
-        s_sLen -= 1;
+        Delete(in, in);
     }
 
-    /*void String::DeleteRange(int in1, int in2) {
-        if ((in2) < s_sLen) {
-           for (iter = in2; 
-        }
-    }*/
+    void String::Delete(int in1, int in2) {
 
-    /*void String::Delete(int in1, int in2) {
-        for (int i = in1, j = (in2 + 1); i < in2, j < s_sLen; i++, j++) {
-            s_buf[i] = s_buf[j];
+        if (in1 >= 0 && in1 <= in2 && in2 < s_sLen) {
+            for (int i = in1, j = (in2 + 1); i <= in2, j < s_sLen; i++, j++) {
+                s_buf[i] = s_buf[j];
+            }
+            for (int i = (s_sLen - ((in2 - in1) + 1)); i < s_sLen; i++) {
+                s_buf[i] = '\0';
+            }
+            s_sLen -= ((in2 - in1) + 1);
         }
-        for (int i = (s_sLen - (in2 + 1)); i < s_sLen; i++) {
-            s_buf[i+1] = '\n';
-        }
-        s_sLen = ((in2 - in1) + 1);
-    }*/
+    }
 
     // Append a character to the end of the string
     void String::Append(char ch) {
@@ -449,6 +443,10 @@ namespace Comet {
     // Public accessors
     int String::Length() const {
         return s_sLen;
+    }
+
+    int String::End() const {
+        return (s_sLen - 1);
     }
 
     char* String::GetBuff() const {

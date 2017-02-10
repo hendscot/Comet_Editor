@@ -89,7 +89,7 @@ namespace Comet {
 				l_iter = l_iter->next;
 				l_iter->str->Concat(l_iter->prev->str->Substr(in, l_iter->prev->End()));
 				l_iter->size = l_iter->Length();
-				//l_iter->prev->str->DeleteRange(in, l_iter->prev->End());
+				l_iter->prev->str->Delete(in, l_iter->prev->End());
 				
 			}
 			else {
@@ -191,6 +191,7 @@ namespace Comet {
 		}
 	}
 
+	/* MAKE THESE STATIC?? */
 	int LineManager::GetLength (int LN) {
 		l_iter = l_strt;
 		for (int i = 0; i < LN && l_iter->next != l_strt; i++, l_iter = l_iter->next);        // find target line

@@ -2,8 +2,10 @@
 #define EDITORCORE_H
 #include "Document.h"
 #include "LineManager.h"
-#define  ENTER 10
-#define  TAB   9
+#define  E_ENTER    0x0A
+#define  E_TAB      0x09
+#define  E_SPACE    0x20
+#define  E_TAB_SIZE 0x04
 namespace Comet {
     class EditorCore {
     public:
