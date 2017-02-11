@@ -54,8 +54,8 @@ namespace Comet {
     switch (e_key) {                               // handle input based on value defined by ncurses
       case KEY_UP: {                               // if up arrow key
         if (e_currLine > 0) {                      // move cursor up one line if not yet on first line
-            if ((e_currIndex) > e_man->GetLength(e_currLine - 1)) {
-                move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine + 1))));
+            if ((e_man->GetLength(e_currLine - 1)) < e_currIndex) {
+                move (e_currLine -= 1, e_currIndex = (e_man->GetLength(e_currLine - 1)));
             }
             else {
                 move (--e_currLine, e_currIndex);
@@ -84,7 +84,7 @@ namespace Comet {
         else {
           for (int i = 0; i < E_TAB_SIZE; i++) {
             // TODO FIND WAY TO FIX INSERT TO REMOVE APPEND
-            Append(E_SPACE, e_currLine);
+            e_man->Append(E_SPACE, e_currLine);
             ++e_currIndex;
           }
         }
@@ -96,11 +96,18 @@ namespace Comet {
         if ((e_currIndex) < e_man->GetLength(e_currLine)) {
           move (e_currLine, ++e_currIndex);          // move cursor right one index
         }
+        else {
+          if ((e_currLine + 1) < (e_man->GetLineCount() - 1)) move (++e_currLine, e_currIndex = 0);
+        }
         break;
       }
       case KEY_LEFT: {   
         if (e_currIndex > 0)                          // if left arrow key
           move (e_currLine, --e_currIndex);          // move cursor left one index
+        else {
+          if (e_currLine > 0)
+            move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1)));
+        }
         break;
       }
       case KEY_BACKSPACE: {                               

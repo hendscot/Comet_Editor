@@ -346,7 +346,25 @@ namespace Comet {
 
     // Append a character to the end of the string
     void String::Append(char ch) {
-        Insert((s_sLen - 1), ch);
+        // if string length doesn't already equal buffer length
+        if (s_sLen < s_bLen) {
+            s_sLen += 1;                                                       // increase string length
+            s_buf[(s_sLen - 1)] = ch;                                          // insert char at empty space on end
+        }
+        // increasing string length will result in out of bounds so realloc
+        else {
+            int sLength = s_sLen + 1;                                          // store original string length
+            int bLength = s_bLen + REALLOC_BY;                                 // new buffer length will be buffer length
+                                                                               // plus desired reallocation modifier   
+            char* t_buf = new char[bLength + 1];                               // alloc temp char buffer with new length
+            t_buf[bLength] = '\0';                                             // null terminate end
+            FillTo(t_buf);                                                     // fill temp buffer with contents of string
+            t_buf[s_bLen] = ch;                                                // now append ch to temp buffer
+            Alloc(bLength);                                                    // realloc string
+            s_sLen = sLength;                                                  // update string length
+            FillFrom(t_buf);                                                   // now refill string with appended contents
+            delete t_buf;                                                      // cleanup temporary buffer
+        }
     } // APPEND(CHAR)
 
     void String::Prepend(char ch) {

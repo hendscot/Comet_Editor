@@ -73,16 +73,8 @@ namespace Comet {
 		l_iter = l_strt;                                                          // iterate lines from beginning
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // iterate while not at target line and 
 		if (i == ln) {
-													  // insert char at desired loc
-			if (!Full(l_iter)) {
-				l_iter->str->Insert(in, ch);
-			}
-			else {
-				InsertLineAfter(l_iter);
-				(l_iter + 1)->str->Prepend(l_iter->str->CharAt(l_iter->str->End()));
-				l_iter->str->Delete(l_iter->str->End());
-				++l_iter;
-			}
+													  // insert char at desired lock
+			l_iter->str->Insert(in, ch);
 			++l_iter->size;
 		}
 	} // INSERTCHAR (INT, INT, CHAR)
@@ -105,6 +97,7 @@ namespace Comet {
 				InsertLineAfter(l_iter);
 				l_iter = l_iter->next;
 			}
+			l_iter->size = l_iter->Length();
 			l_iter->newL = true;
 		} 
 	} // INSERTBREAK (INT, INT, CH)
@@ -125,13 +118,7 @@ namespace Comet {
 			l_iter->newL = true;
 		}																	        // if ch is a newline char
 		else {
-			if (!Full(l_iter))
-				(l_iter->str->Append(ch);											// insert a ch at curr string index
-			else {
-				InsertLineAfter(l_iter);
-				++l_iter;
-				l_iter->str->Append(ch);
-			}
+			(l_iter->str->Append(ch));											// insert a ch at curr string index
 			++l_iter->currIn;
 			++l_iter->size;
 		}
@@ -142,12 +129,8 @@ namespace Comet {
 		l_iter = l_strt;                                                          // l_iterate lines from beginning
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // l_iterate while not at target line and 
 		if (i == ln) {
-			if (!Full(l_iter)) l_iter->str->Append(ch);
-			else {
-				InsertLineAfter(l_iter);
-				++l_iter;
-				l_iter->str->Append(ch);
-			}
+			(l_iter->str->Append(ch));											// insert a ch at curr string index
+			++l_iter->currIn;
 			++l_iter->size;
 		}
 	} // APPEND(CHAR, INT)
