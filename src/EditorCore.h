@@ -2,6 +2,7 @@
 #define EDITORCORE_H
 #include "Document.h"
 #include "LineManager.h"
+#define  E_BEG      0x02
 #define  E_ENTER    0x0A
 #define  E_TAB      0x09
 #define  E_SPACE    0x20

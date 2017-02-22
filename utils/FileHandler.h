@@ -11,7 +11,7 @@ public:
   FileHandler  ();
   ~FileHandler ();
   char* Read   (const char*);
-  void  Write  (const char*);
+  void  Write  (const char*, char*);
 
   unsigned GetLength();
 

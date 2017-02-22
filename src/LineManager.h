@@ -1,6 +1,7 @@
 #ifndef LineManager_H
 #define LineManager_H
 // BEGIN COMET NAMESPACE
+class String;
 namespace Comet {
     class Line;                                                      // Forward declare line class
     // BEGIN LineManager CLASS
@@ -17,6 +18,7 @@ namespace Comet {
         void InsertBreak(int, int);
         int  GetLength (int);
         int  GetLineCount ();
+        char* GetLines();
         void Display();
         Line* First        ();
     // END PUBLIC DATA

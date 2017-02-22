@@ -3,7 +3,6 @@
 #include <ncurses.h>
 #include "Line.h"
 #include "LineManager.h"
-
 namespace Comet {
 	// No param constructor - intialize pointers, create new line
 	LineManager::LineManager() {
@@ -89,7 +88,6 @@ namespace Comet {
 				InsertLineAfter(l_iter);										   // chars to next line
 				l_iter = l_iter->next;
 				l_iter->str->Concat(l_iter->prev->str->Substr(in, l_iter->prev->End()));
-				l_iter->size = l_iter->Length();
 				l_iter->prev->str->Delete(in, l_iter->prev->End());
 				
 			}
@@ -228,10 +226,21 @@ namespace Comet {
         l_iter = l_strt;
         do {
           // test if this will work?
-          printw(l_iter->str->GetBuff());
+		  printw("%u ", l_iter->lineNO);
+          printw("%s", l_iter->str->GetBuff());
           printw("\n");
           l_iter = l_iter->next;
         } while (l_iter != l_strt && l_iter != NULL);
       }
 	} // DISPLAY ()
+
+	char* LineManager::GetLines () {
+		l_iter = l_strt;
+		Comet::String l_linedata(GetLineCount() * 80);
+		int lnCount = GetLineCount();
+		for (int i = 0; i < 1; i++, l_iter = l_iter->next) {
+			l_linedata.Concat(*l_iter->str);
+		}
+		return l_linedata.GetBuff();
+	}
 }

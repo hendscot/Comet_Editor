@@ -24,7 +24,7 @@ namespace Comet {
     e_man              = new LineManager;          // create new LineMan object
     e_shouldClose      = false;                    // set shouldClose state to false
     e_currLine         = 0;                        // default line is 0
-    e_currIndex        = 0;                        // default index is 0
+    e_currIndex        = E_BEG;                        // default index is 0
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
     attron(COLOR_PAIR(1));
@@ -38,14 +38,12 @@ namespace Comet {
     e_path = filepath;
     e_doc->LoadDocument(e_path);                   // Load contents of file at e_path into Document buffer
     int length = e_doc->GetSize();                 // store the length of the file buffer
-    for (int i = 0; i < length; i++){              // transfer buffer contents into lines in the line manager object
-      e_man->Append(e_doc->buffer[i]);
-    }
     this->Display ();
-    move (0, 0);
+    move (0, E_BEG);
   }
 
   void EditorCore::Save () {
+    e_doc->SaveDocument (e_man->GetLines());
   }
 
  // Method to acquire and handle user input
@@ -54,8 +52,8 @@ namespace Comet {
     switch (e_key) {                               // handle input based on value defined by ncurses
       case KEY_UP: {                               // if up arrow key
         if (e_currLine > 0) {                      // move cursor up one line if not yet on first line
-            if ((e_man->GetLength(e_currLine - 1)) < e_currIndex) {
-                move (e_currLine -= 1, e_currIndex = (e_man->GetLength(e_currLine - 1)));
+            if ((e_man->GetLength(e_currLine - 1) + E_BEG) < e_currIndex) {
+                move (e_currLine -= 1, e_currIndex = (e_man->GetLength(e_currLine - 1) + E_BEG));
             }
             else {
                 move (--e_currLine, e_currIndex);
@@ -65,10 +63,9 @@ namespace Comet {
       }
       case KEY_DOWN: {                             // if down arrow key
         if ((e_currLine + 1) < e_man->GetLineCount () - 1) {
-            if (e_currIndex >= e_man->GetLength(e_currLine + 1)) {
+            if (e_currIndex >= e_man->GetLength(e_currLine + 1) + E_BEG) {
                 move (++e_currLine, (e_currIndex = (e_man->GetLength(e_currLine + 1))));          // move cursor down one line
             }
-        
             else {
                 move (++e_currLine, e_currIndex);
             }
@@ -76,7 +73,7 @@ namespace Comet {
         break;
       }
       case E_TAB: {
-        if (e_currIndex < e_man->GetLength(e_currLine)) {
+        if (e_currIndex < e_man->GetLength(e_currLine) + E_BEG) {
           for (int i = 0; i < E_TAB_SIZE; i++) {
             Insert(e_currLine, e_currIndex++, E_SPACE);
           }
@@ -93,42 +90,42 @@ namespace Comet {
         break;
       }
       case KEY_RIGHT: {                            // if right arrow key
-        if ((e_currIndex) < e_man->GetLength(e_currLine)) {
+        if ((e_currIndex) < e_man->GetLength(e_currLine) + E_BEG) {
           move (e_currLine, ++e_currIndex);          // move cursor right one index
         }
         else {
-          if ((e_currLine + 1) < (e_man->GetLineCount() - 1)) move (++e_currLine, e_currIndex = 0);
+          if ((e_currLine + 1) < (e_man->GetLineCount() - 1)) move (++e_currLine, e_currIndex = E_BEG);
         }
         break;
       }
       case KEY_LEFT: {   
-        if (e_currIndex > 0)                          // if left arrow key
+        if (e_currIndex > E_BEG)                          // if left arrow key
           move (e_currLine, --e_currIndex);          // move cursor left one index
         else {
-          if (e_currLine > 0)
-            move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1)));
+          if (e_currLine > E_BEG)
+            move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1) + E_BEG));
         }
         break;
       }
       case KEY_BACKSPACE: {                               
-        if ((e_currIndex) > 0) {
+        if ((e_currIndex) > E_BEG) {
           Delete(e_currLine, e_currIndex);
           this->Display();
           move (e_currLine, (--e_currIndex)); 
             
         }
-        else if (e_currIndex == 0 && e_currLine > 0) {
+        else if (e_currIndex == E_BEG && e_currLine > 0) {
+            int oldlength = (e_man->GetLength(e_currLine - 1) + E_BEG);
             Delete(e_currLine, e_currIndex);
             this->Display();
-            move (--e_currLine, (e_currIndex = (e_man->GetLength(e_currLine - 1))));
+            move (--e_currLine, (e_currIndex = oldlength));
         }
-            
         break;
       }
       case E_ENTER: {
         e_man->InsertBreak(e_currLine, e_currIndex);
         this->Display();
-        move (++e_currLine, (e_currIndex = 0));
+        move (++e_currLine, (e_currIndex = E_BEG));
         break;
       }
       case KEY_SLEFT: {
@@ -136,7 +133,7 @@ namespace Comet {
         break;
       }
       default: {                                             // if letter TODO: specify if alpha char
-        if (e_currIndex < e_man->GetLength(e_currLine)) {
+        if (e_currIndex < (e_man->GetLength(e_currLine) + E_BEG)) {
           Insert(e_currLine, e_currIndex, e_key);   // insert char at current cursor line and index
           this->Display();                                     // update state of ncurses windows
           move (e_currLine, e_currIndex += 1);                    // move cursor to next index
@@ -151,13 +148,13 @@ namespace Comet {
     }
   } // HANDLEINPUT ()
 
-    // Delete current index of current liner TODO
+    // Delete current index of current line TODO
   void EditorCore::Delete (int ln, int in) {
-    e_man->DeleteChar(ln, in);
+    e_man->DeleteChar(ln, (in - E_BEG));
   } // DELETE (INT, INT)
 
   void EditorCore::Insert (int line, int indx, char ch) {
-    e_man->InsertChar(line, indx, ch);
+    e_man->InsertChar(line, (indx - E_BEG), ch);
   }
 
     void EditorCore::Display () {
