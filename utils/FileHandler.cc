@@ -35,9 +35,9 @@ char* FileHandler::Read (const char* path) {
 }
 
 // WORKING BUT THIS IS PLACEHOLDER CODE (NEED SOME WAY TO PRINT LINES FROM DOC)
-void FileHandler::Write (const char* path, char* buff) {
+void FileHandler::Write (const char* path, Comet::String* buff) {
   std::ofstream fout(path);
-  fout.write(buff, sizeof(buff));
+  fout.write(buff->GetBuff(), buff->Length());
   fout.close();
 }
 
