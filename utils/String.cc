@@ -5,7 +5,7 @@ namespace Comet {
     String::String(int size) {
         // NULL the buffer
         s_buf = NULL;
-        
+        s_bLen = 0;
         s_sLen = 0;
         // allocate space
         Alloc(size);
@@ -30,7 +30,7 @@ namespace Comet {
     // Deconstructor
     String::~String() {
         // delete the buffer on deconstruction
-        delete [] s_buf;
+        Dealloc ();
     } // String::~String()
 
     //************* Overloaded Operators ************************
@@ -48,7 +48,7 @@ namespace Comet {
             else {
                 // else just terminate end
                 s_sLen = str.s_sLen;
-                //Term(); //DOES THIS EVEN WORK??
+                Term(s_sLen);
             }
             // assign buffer to assignee buffer
             FillFrom(str.s_buf);
@@ -66,9 +66,9 @@ namespace Comet {
         }
         else {
             s_sLen = length;
-            //Term();
+            Term(s_sLen);
         }
-        FillFrom(str);
+        FillFrom(str, 0);
         return *this;
     }
 
@@ -155,17 +155,13 @@ namespace Comet {
     }
     
     // TODO : REWRITE - NOT FUNCTIONING
-    String String::operator+(const char* str) {
+    String operator+(const String& lhs, const String& rhs) {
         String string;
-        string.Alloc(this->s_sLen += len(str));
-        string.Concat(this->s_buf, str);
-        //std::cout << string << std::endl;
+        string.Alloc(string.s_sLen = lhs.Length() + rhs.Length());
+        string.Concat(lhs.GetBuff(), rhs.GetBuff());
         return string;
     }
 
-    String String::operator+(const String& str) {
-        return (*this + str.s_buf);
-    }
 
     String String::operator+=(const char* str) {
         String string(*this);
@@ -227,13 +223,18 @@ namespace Comet {
 
     // fill buffer with c-string
     void String::FillFrom(const char* str) {
-        for (iter = 0; iter < s_sLen; iter++) {
-            this->s_buf[iter] = str[iter];
+        FillFrom(str, 0);
+    }
+
+    void String::FillFrom(const char* str, int start) {
+        int i, length = len(str);
+        for (i = 0, iter = start; iter < this->s_sLen && i < length; iter++, i++) {
+            this->s_buf[iter] = str[i];
         }
     }
 
     void String::FillTo(char* str) const {
-        for (iter = 0; iter < s_sLen; iter++) {
+        for (iter = 0; iter < this->s_sLen; iter++) {
             str[iter] = this->s_buf[iter];
         }       
     }
@@ -262,7 +263,7 @@ namespace Comet {
             if (len != 0) {
                 s_bLen = len;
                 s_buf = new char[s_bLen + 1];
-                Term();
+                Term(0);
             }
         }
     }
@@ -278,9 +279,8 @@ namespace Comet {
         }
     }
 
-    // TODO: needs work
-    void String::Term() {
-        for (iter = 0; iter <= s_bLen; iter++) {
+    void String::Term(int spnt) {
+        for (iter = spnt; iter <= s_bLen; iter++) {
             s_buf[iter] = '\0';
         }
     }
@@ -343,30 +343,52 @@ namespace Comet {
             s_sLen -= range;
         }
     }
-
-    // Append a character to the end of the string
-    void String::Append(char ch) {
+    /**********************Main Append Method***********************************************
+     *
+     *         Takes a cstring and its length as arguments to append to current buffer
+     *      Two overloaded methods allow for using a char or cstring
+     *      Prgrmr ay NOT call this method, for their own protection, other appends calculate
+     *      length of string for them. This is necessary to user char with Append!
+     **************************************************************************************/
+    void String::Append(const char* str, int leng) {
         // if string length doesn't already equal buffer length
-        if (s_sLen < s_bLen) {
-            s_sLen += 1;                                                       // increase string length
-            s_buf[(s_sLen - 1)] = ch;                                          // insert char at empty space on end
+        int cLen = leng;
+        //std::cout << cLen << std::endl;
+        if ((s_sLen + cLen) < s_bLen) {
+            s_sLen += cLen;                                                       // increase string length
+            this->FillFrom(str, s_sLen - cLen);
         }
         // increasing string length will result in out of bounds so realloc
         else {
-            int sLength = s_sLen + 1;                                          // store original string length
-            int bLength = s_bLen + REALLOC_BY;                                 // new buffer length will be buffer length
-                                                                               // plus desired reallocation modifier   
-            char* t_buf = new char[bLength + 1];                               // alloc temp char buffer with new length
-            t_buf[bLength] = '\0';                                             // null terminate end
+            int sLength = s_sLen;                                             // store original string length
+            int bLength = s_bLen + REALLOC_BY + cLen;                          // new buffer length will be buffer length
+            char* t_buf = new char[s_sLen + 1];                               // alloc temp char buffer with new length
+            t_buf[s_bLen] = '\0';                                             // null terminate end
             FillTo(t_buf);                                                     // fill temp buffer with contents of string
-            t_buf[s_bLen] = ch;                                                // now append ch to temp buffer
             Alloc(bLength);                                                    // realloc string
-            s_sLen = sLength;                                                  // update string length
+            s_sLen = sLength + cLen;                                           // update string length
             FillFrom(t_buf);                                                   // now refill string with appended contents
+            FillFrom(str, s_sLen - cLen);
             delete t_buf;                                                      // cleanup temporary buffer
         }
+    }
+    /****One of the two public append methods. Calculates length of string and calls overloaded
+     *   append method
+     */
+    void String::Append(const char* str) {
+        Append(str, len(str));
+    }
+    /*One of the two public append methods. Passes a char by reference to be compatible with
+     * cstring append method where append logic is. we pass one as the length of the character
+     * if we don't pass length before calling append, we get undefined length due to lack of 
+     * terminating char '\0'. This makes it necessary to pass length for cstring first ver. too
+     */
+    // Append a character to the end of the string
+    void String::Append(char ch) {
+        Append(&ch, 1);
     } // APPEND(CHAR)
 
+    // simply inserts a char at the beginning. Unecessary, just for user-friendliness
     void String::Prepend(char ch) {
         Insert(0, ch);
     }
