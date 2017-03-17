@@ -12,14 +12,14 @@ namespace Comet {
         LineManager();                                               // no param constructor
         ~LineManager();                                              // destructor
         void Append(char);                                           // Append char to latest index
-        void Append(char, int);
-        void DeleteChar(int, int);                                   // Delete char from target at line at target index
-        void InsertChar(int, int, char);                             // Insert char to target line at target index
-        void InsertBreak(int, int);
-        int  GetLength (int);
-        int  GetLineCount ();
-        char* GetLines();
-        void Display();
+        void Append(char, const size_t);
+        void DeleteChar(const size_t, const size_t);                                   // Delete char from target at line at target index
+        void InsertChar(const size_t, const size_t, char);                             // Insert char to target line at target index
+        void InsertBreak(const size_t, const size_t);
+        size_t  GetLength (const size_t) const;
+        size_t  GetLineCount () const;
+        char* GetLines() const;
+        void Display() const;
         Line* First        ();
     // END PUBLIC DATA
 

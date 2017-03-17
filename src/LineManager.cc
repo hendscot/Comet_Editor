@@ -243,4 +243,8 @@ namespace Comet {
 		}
 		return l_linedata.GetBuff();
 	}
+
+	friend std::fin& operator<< (const std::fin&, const LineManager&) {
+		
+	}
 }
