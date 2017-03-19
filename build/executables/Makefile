@@ -1,6 +1,7 @@
 GCC = g++ -std=c++11
 SRC = ../../src/
 UTILS = ../../utils/
+STR   = ../../utils/Comet-String/
 OBJ = ../objects/
 EXE = ../executables/
 LINK = -lncurses
@@ -31,8 +32,8 @@ Editor.o: $(SRC)Editor.h $(SRC)Editor.cc
 Menu.o: $(SRC)Menu.h $(SRC)Menu.cc
 	$(GCC) -c -o $(OBJ)Menu.o $(SRC)Menu.cc $(Link)
 
-String.o: $(UTILS)String.cc $(UTILS)String.h
-	$(GCC) -c -o $(OBJ)String.o $(UTILS)String.cc
+String.o: $(STR)String.cc $(STR)String.h
+	$(GCC) -c -o $(OBJ)String.o $(STR)String.cc
 
 main.o: $(SRC)main.cc
 	$(GCC) -c -o $(OBJ)main.o $(SRC)main.cc

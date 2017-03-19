@@ -1,7 +1,7 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 class FileHandler;
-#include "../utils/String.h"
+#include "../utils/Comet-String/String.h"
 class Document {
 public:
   Document                                         ();

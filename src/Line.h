@@ -1,6 +1,6 @@
 #ifndef LINE_H
 #define LINE_H
-#include "../utils/String.h"
+#include "../utils/Comet-String/String.h"
 const int STR_SIZE = 80;                                   // line length is defined with a max of 80 chars
 // BEGIN COMET NAMESPACE
 namespace Comet {
@@ -13,7 +13,7 @@ namespace Comet {
         Line                           (const Line&);      // Copy constructor to create duplicate liner
         ~Line                          ();                 // Destructor
         int End                        ();
-        int 
+        int
         Length                         ();                 // Return string length
     // END PUBLIC DATA
 
@@ -28,6 +28,6 @@ namespace Comet {
         int                            size;               // stores line length
         static unsigned                lineAmnt;           // maintains total number of lines existing in the application
     // END PRIVATE DATA
-    }; // LINE CLASS                      
+    }; // LINE CLASS
 } // COMET NAMESPACE
 #endif // LINE_H

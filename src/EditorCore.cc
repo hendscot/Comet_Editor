@@ -17,7 +17,7 @@ namespace Comet {
       // Initialize members and ncurses
   void EditorCore::Init () {
     initscr             ();                         // initialize ncurses!
-    cbreak              ();                         // 
+    cbreak              ();                         //
     noecho              ();                         // disable ncurses key echo
     keypad              (stdscr, true);             // enable ncurses special keys
     e_doc              = new Document;             // Create new document object
@@ -101,7 +101,7 @@ namespace Comet {
         }
         break;
       }
-      case KEY_LEFT: {   
+      case KEY_LEFT: {
         if (e_currIndex > E_BEG)                          // if left arrow key
           move (e_currLine, --e_currIndex);          // move cursor left one index
         else {
@@ -110,12 +110,12 @@ namespace Comet {
         }
         break;
       }
-      case KEY_BACKSPACE: {                               
+      case KEY_BACKSPACE: {
         if ((e_currIndex) > E_BEG) {
           Delete(e_currLine, e_currIndex);
           this->Display();
-          move (e_currLine, (--e_currIndex)); 
-            
+          move (e_currLine, (--e_currIndex));
+
         }
         else if (e_currIndex == E_BEG && e_currLine > 0) {
             int oldlength = (e_man->GetLength(e_currLine - 1) + E_BEG);
@@ -126,14 +126,14 @@ namespace Comet {
         break;
       }
       case E_ENTER: {
-        e_man->InsertBreak(e_currLine, e_currIndex);
+        e_man->InsertBreak(e_currLine, e_currIndex - E_BEG);
         e_doc->buffer->Insert((e_currLine + 1) * (e_currIndex - E_BEG), '\n');
         this->Display();
         move (++e_currLine, (e_currIndex = E_BEG));
         break;
       }
       case KEY_SLEFT: {
-        Save();     
+        Save();
         break;
       }
       default: {                                             // if letter TODO: specify if alpha char
