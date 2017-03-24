@@ -23,7 +23,6 @@ namespace Comet {
         Line*                          prev;               // pointer to address of previous line
         Comet::String*                 str;                // line data is maintained as type Comet::String
         bool                           newL;               // stores state of line (contains a newline or not)
-        unsigned                       lineNO;             // maintains corresponding line number
         unsigned                       currIn;             // maintains current index of line
         int                            size;               // stores line length
         static unsigned                lineAmnt;           // maintains total number of lines existing in the application

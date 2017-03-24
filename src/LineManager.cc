@@ -224,9 +224,10 @@ namespace Comet {
 	void LineManager::Display () const {
       if (l_strt){
         l_iter = l_strt;
+		unsigned l_no = 1;
         do {
           // test if this will work?
-		  printw("%u ", l_iter->lineNO);
+		  printw("%u ", l_no);
           printw("%s", l_iter->str->GetBuff());
           printw("\n");
           l_iter = l_iter->next;
