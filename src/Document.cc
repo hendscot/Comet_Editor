@@ -1,9 +1,9 @@
 #include "../utils/FileHandler.h"
 #include "Document.h"
+#include "LineManager.h"
 #include <iostream>
 
 Document::Document() {
-  FH = new FileHandler;
 }
 
 Document::~Document() {
@@ -17,11 +17,10 @@ bool Document::LoadDocument(const char* path) {
   return 1; // return status later
 }
 
-bool Document::SaveDocument() {
-  FH->Write("test2.txt", buffer);
+bool Document::SaveDocument(const LineManager& doc) {
+  FileHandler::Write("test2.txt", doc);
   return 1;
 }
-
 
 unsigned Document::GetSize(){
   return bufSize;

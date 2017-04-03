@@ -127,7 +127,6 @@ namespace Comet {
       }
       case E_ENTER: {
         e_man->InsertBreak(e_currLine, e_currIndex - E_BEG);
-        e_doc->buffer->Insert((e_currLine + 1) * (e_currIndex - E_BEG), '\n');
         this->Display();
         move (++e_currLine, (e_currIndex = E_BEG));
         break;
@@ -144,7 +143,6 @@ namespace Comet {
         }
         else {
           e_man->Append(e_key, e_currLine);
-          e_doc->buffer->Append(e_key);
           this->Display();
           move (e_currLine, e_currIndex += 1);
         }
@@ -156,12 +154,10 @@ namespace Comet {
     // Delete current index of current line TODO
   void EditorCore::Delete (int ln, int in) {
     e_man->DeleteChar(ln, (in - E_BEG));
-    e_doc->buffer->Delete((ln + 1) * (in - E_BEG) - 1);
   } // DELETE (INT, INT)
 
   void EditorCore::Insert (int line, int indx, char ch) {
     e_man->InsertChar(line, (indx - E_BEG), ch);
-    e_doc->buffer->Insert((line + 1)*(indx - E_BEG), ch);
   }
 
     void EditorCore::Display () {

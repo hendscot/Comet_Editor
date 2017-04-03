@@ -1,25 +1,17 @@
 #define _CRT_SECURE_NO_WARNINGS
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "Comet-String/String.h"
-
-
+class LineManager;
 class FileHandler {
 public:
-  FileHandler  ();
   ~FileHandler ();
-  char* Read   (const char*);
-  void  Write  (const char*, Comet::String*);
-
-  unsigned GetLength();
-
+  static char*    Read   (const char*);
+  static void     Write  (const char*, const LineManager&*);
+  static unsigned GetLength();
 private:
-  FILE* FH_doc;
-  unsigned FH_docLen;
-  char* buffer;
+  FileHandler  ();
+  unsigned docLen;
+  char*    buffer;
 };
 
 #endif //FILEHANDLER_H

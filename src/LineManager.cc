@@ -87,7 +87,7 @@ namespace Comet {
 			if (in <= (l_iter->End())) {                                             // if not at end of line will have to move remaining
 				InsertLineAfter(l_iter);										   // chars to next line
 				l_iter = l_iter->next;
-				l_iter->str->Concat(l_iter->prev->str->Substr(in, l_iter->prev->End()));
+				l_iter->str->Append(l_iter->prev->str->Substr(in, (l_iter->prev->End() - in) + 1));
 				l_iter->prev->str->Delete(in, l_iter->prev->End());
 
 			}
@@ -204,14 +204,14 @@ namespace Comet {
 		if (LN->prev->size < 80) {
 			int space = (80 - LN->prev->size);
 			if (LN->size <= space) {
-				LN->prev->str->Concat(LN->str->Substr(0, LN->str->Length()-1));
+				LN->prev->str->Append(LN->str->Substr(0, LN->str->Length()));
 				LN->prev->size = LN->prev->str->Length();
 				return 0;
 			}
 			else {
-				Comet::String sub(LN->str->Substr(0, (space - 1)));
-				//LN->str->Delete(0, (space - 1));
-				LN->prev->str->Concat(sub);
+				Comet::String sub(LN->str->Substr(0, space));
+				LN->str->Delete(0, (space - 1));
+				LN->prev->str->Append(sub);
 				return 1;
 			}
 		}
@@ -231,6 +231,7 @@ namespace Comet {
           printw("%s", l_iter->str->GetBuff());
           printw("\n");
           l_iter = l_iter->next;
+		  ++l_no;
         } while (l_iter != l_strt && l_iter != NULL);
       }
 	} // DISPLAY ()
@@ -240,7 +241,7 @@ namespace Comet {
 		Comet::String l_linedata(GetLineCount() * 80);
 		int lnCount = GetLineCount();
 		for (int i = 0; i < 1; i++, l_iter = l_iter->next) {
-			l_linedata.Concat(*l_iter->str);
+			l_linedata.Append(*l_iter->str);
 		}
 		return l_linedata.GetBuff();
 	}
