@@ -3,7 +3,7 @@
 namespace Comet {
   // Constructing a new Editor
   Editor::Editor() {
-    Init ();
+    InitGUIOptions ();
   } // EDITOR (CHAR*)
 
   // Deconstruct Editor
