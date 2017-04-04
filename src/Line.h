@@ -17,11 +17,11 @@ namespace Comet {
         Length                         ();                 // Return string length
     // END PUBLIC DATA
 
+    Line*                          next;               // pointer to address of next line
+    Line*                          prev;               // pointer to address of previous line
+    Comet::String*                 str;                // line data is maintained as type Comet::String
     // BEGIN PRIVATE DATA
     private:
-        Line*                          next;               // pointer to address of next line
-        Line*                          prev;               // pointer to address of previous line
-        Comet::String*                 str;                // line data is maintained as type Comet::String
         bool                           newL;               // stores state of line (contains a newline or not)
         unsigned                       currIn;             // maintains current index of line
         int                            size;               // stores line length

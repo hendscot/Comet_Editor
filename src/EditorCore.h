@@ -12,14 +12,14 @@ namespace Comet {
     public:
         EditorCore  ();
         ~EditorCore ();
-    
+
         void         Load              (const char*);  // Call Document class LoadDocument method which loads file state into a doc buffer
     protected:
         bool         e_shouldClose;                    // State variable that alerts system loop to end
         void         Init              ();             // Initialize ncurses and private members
         void         Poll              ();
         void         Save              ();             // Save current file state
-        
+
     // BEGIN PRIVATE DATA
     private:
         // PRIVATE MEMBERS

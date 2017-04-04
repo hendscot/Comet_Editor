@@ -12,13 +12,13 @@ namespace Comet {
         LineManager();                                               // no param constructor
         ~LineManager();                                              // destructor
         void Append(char);                                           // Append char to latest index
-        void Append(char, const size_t);
-        void DeleteChar(const size_t, const size_t);                                   // Delete char from target at line at target index
-        void InsertChar(const size_t, const size_t, char);                             // Insert char to target line at target index
-        void InsertBreak(const size_t, const size_t);
-        size_t  GetLength (const size_t) const;
-        size_t  GetLineCount () const;
-        char* GetLines() const;
+        void Append(char, const int);
+        void DeleteChar(const int, const int);                                   // Delete char from target at line at target index
+        void InsertChar(const int, const int, char);                             // Insert char to target line at target index
+        void InsertBreak(const int, const int);
+        int  GetLength (const int) const;
+        int  GetLineCount () const;
+        Line* GetStart() const;
         void Display() const;
         Line* First        ();
     // END PUBLIC DATA
@@ -36,7 +36,7 @@ namespace Comet {
         bool    NoLines();                                              // check if any lines exist
         bool    Full(LPTR);                                             // check if line is at max defined capacity
         void    SelfDestruct ();
-        size_t  ConcatLines  (LPTR);
+        int  ConcatLines  (LPTR);
     // END PRIVATE DATA
     }; // END LineManager CLASS
 } // END COMET NAMESPACE

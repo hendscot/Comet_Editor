@@ -1,6 +1,8 @@
 #include "FileHandler.h"
-#include "../src/LineManager.h"
 #include <fstream>
+
+unsigned FileHandler::docLen = 0;
+char*    FileHandler::buffer = NULL;
 
 FileHandler::FileHandler() {
 }
@@ -20,16 +22,16 @@ char* FileHandler::Read (const char* path) {
   return buffer;
 }
 
-void FileHandler::Write (const char* path, const LineManager&* doc) {
+void FileHandler::Write (const char* path, Comet::Line* ln) {
   std::ofstream fout(path);
-  int lines = doc->GetLineCount ();
-  LPTR* temp = doc->l_strt;
-  for (int i = 0; i < lines; i++, temp = temp->next) {
+  Comet::Line* temp = ln;
+  do {
     fout.write(temp->str->GetBuff(), temp->str->Length());
-  }
+    fout.write("\n", 2);
+    temp = temp->next;
+  } while (temp != ln);
   fout.close();
 }
 
 unsigned FileHandler::GetLength(){
-  return this->FH_docLen;
 }

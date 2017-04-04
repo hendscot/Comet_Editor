@@ -67,7 +67,7 @@ namespace Comet {
 		}
 	} // INSERTLINEAFTER (LPTR)
 	// TODO: INSERT CODE TO PREVENT ACCESS OF NONEXISTENT LINE NUMBER (POSSIBLY CALL NEWLINE METHOD?)
-	void LineManager::InsertChar(const size_t ln, const size_t in, char ch) {
+	void LineManager::InsertChar(const int ln, const int in, char ch) {
 		int i;
 		l_iter = l_strt;                                                          // iterate lines from beginning
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // iterate while not at target line and
@@ -79,7 +79,7 @@ namespace Comet {
 	} // INSERTCHAR (INT, INT, CHAR)
 
 	// used specifically for handling line break input
-	void LineManager::InsertBreak(const size_t ln, const size_t in) {
+	void LineManager::InsertBreak(const int ln, const int in) {
 		int i;
 		l_iter = l_strt;
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);
@@ -122,7 +122,7 @@ namespace Comet {
 		}
 	} // APPEND (CHAR)
 
-	void LineManager::Append(char ch, const size_t ln) {
+	void LineManager::Append(char ch, const int ln) {
 		int i;
 		l_iter = l_strt;                                                          // l_iterate lines from beginning
 		for (i = 0; i < ln; l_iter = l_iter->next, i++);     					  // l_iterate while not at target line and
@@ -135,7 +135,7 @@ namespace Comet {
 
 	// TODO: HANDLE CONCATENATING LINES
 	// delete a character at a specific index and line
-	void LineManager::DeleteChar(const size_t LN, const size_t index) {
+	void LineManager::DeleteChar(const int LN, const int index) {
 		l_iter = l_strt;
 		for (int i = 0; i < LN && l_iter->next != l_strt; i++, l_iter = l_iter->next);        // find target line
 		if (index == 0) {
@@ -190,17 +190,17 @@ namespace Comet {
 	}
 
 	/* MAKE THESE STATIC?? */
-	size_t LineManager::GetLength (const size_t LN) const {
+	int LineManager::GetLength (const int LN) const {
 		l_iter = l_strt;
 		for (int i = 0; i < LN && l_iter->next != l_strt; i++, l_iter = l_iter->next);        // find target line
 		return l_iter->Length ();
 	} // GETLENGTH (INT)
 
-	size_t LineManager::GetLineCount() const {
+	int LineManager::GetLineCount() const {
 		return l_strt->lineAmnt;
 	} // GETLINECOUNT ()
 
-	size_t LineManager::ConcatLines (LPTR LN) {
+	int LineManager::ConcatLines (LPTR LN) {
 		if (LN->prev->size < 80) {
 			int space = (80 - LN->prev->size);
 			if (LN->size <= space) {
@@ -236,13 +236,7 @@ namespace Comet {
       }
 	} // DISPLAY ()
 
-	char* LineManager::GetLines () const {
-		l_iter = l_strt;
-		Comet::String l_linedata(GetLineCount() * 80);
-		int lnCount = GetLineCount();
-		for (int i = 0; i < 1; i++, l_iter = l_iter->next) {
-			l_linedata.Append(*l_iter->str);
-		}
-		return l_linedata.GetBuff();
+	Line* LineManager::GetStart () const {
+		return l_strt;
 	}
 }

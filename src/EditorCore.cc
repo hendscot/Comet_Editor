@@ -46,7 +46,7 @@ namespace Comet {
   }
 
   void EditorCore::Save () {
-    e_doc->SaveDocument();
+    e_doc->SaveDocument(e_man->GetStart());
   }
 
  // Method to acquire and handle user input
@@ -102,11 +102,18 @@ namespace Comet {
         break;
       }
       case KEY_LEFT: {
-        if (e_currIndex > E_BEG)                          // if left arrow key
-          move (e_currLine, --e_currIndex);          // move cursor left one index
-        else {
-          if (e_currLine > E_BEG)
+        if (e_currLine > 0) {                         // if left arrow key
+          if (e_currIndex > E_BEG) {
+            move (e_currLine, --e_currIndex);          // move cursor left one index
+          }
+          else {
             move (--e_currLine, e_currIndex = (e_man->GetLength(e_currLine - 1) + E_BEG));
+          }
+        }
+        else {
+          if (e_currIndex > E_BEG) {
+            move (e_currLine, --e_currIndex);          // move cursor left one index
+          }          
         }
         break;
       }

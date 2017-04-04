@@ -1,17 +1,17 @@
 #define _CRT_SECURE_NO_WARNINGS
 #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
-class LineManager;
+#include "../src/Line.h"
 class FileHandler {
 public:
   ~FileHandler ();
   static char*    Read   (const char*);
-  static void     Write  (const char*, const LineManager&*);
+  static void     Write  (const char*, Comet::Line*);
   static unsigned GetLength();
 private:
   FileHandler  ();
-  unsigned docLen;
-  char*    buffer;
+  static unsigned docLen;
+  static char*    buffer;
 };
 
 #endif //FILEHANDLER_H

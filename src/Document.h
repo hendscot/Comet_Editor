@@ -1,12 +1,12 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
-class LineManager;
+#include "Line.h"
 class Document {
 public:
   Document                                         ();
   ~Document                                        ();
   bool LoadDocument                                (const char*);
-  bool SaveDocument                                (const LineManager&);
+  bool SaveDocument                                (Comet::Line*);
   Comet::String*                                   buffer;
 
   // PUBLIC ACCESSORS
