@@ -1,36 +1,39 @@
-GCC = g++ -std=c++11
-SRC = ../../src/
-UTILS = ../../utils/
+GCC   = g++ -std=c++11
+DEBUG = -g
+SRC   = ../../src
+XCORE = ../../src/Core/
+XINT  = ../../src/Interface/
+XIO   = ../../src/IO/
+ICORE = ../../includes/Core/
+IINT  = ../../includes/Interface/
+IIO   = ../../includes/IO/
 STR   = ../../utils/Comet-String/
-OBJ = ../objects/
-EXE = ../executables/
-LINK = -lncurses
+OBJ   = ../objects/
+EXE   = ../executables/
+LINK  = -lncurses
 
 all: main
 
-main: FileHandler.o Menu.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
-	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)Menu.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
+main: Menu.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
+	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)Menu.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
 
-FileHandler.o: $(UTILS)FileHandler.cc $(UTILS)FileHandler.h
-	$(GCC) -c -o $(OBJ)FileHandler.o $(UTILS)FileHandler.cc
+LineManager.o: $(ICORE)LineManager.h $(XCORE)LineManager.cc
+	$(GCC) -c -o $(OBJ)LineManager.o $(XCORE)LineManager.cc
 
-LineManager.o: $(SRC)LineManager.h $(SRC)LineManager.cc
-	$(GCC) -c -o $(OBJ)LineManager.o $(SRC)LineManager.cc
+Line.o: $(ICORE))Line.h $(XCORE)Line.cc
+	$(GCC) -c -o $(OBJ)Line.o $(XCORE)Line.cc
 
-Line.o: $(SRC)Line.h $(SRC)Line.cc
-	$(GCC) -c -o $(OBJ)Line.o $(SRC)Line.cc
+EditorCore.o: $(ICORE)EditorCore.h $(XCORE)EditorCore.cc
+	$(GCC) -c -o $(OBJ)EditorCore.o $(XCORE)EditorCore.cc $(LINK)
 
-Document.o: $(SRC)Document.h $(SRC)Document.cc
-	$(GCC) -c -o $(OBJ)Document.o $(SRC)Document.cc
+Document.o: $(IIO)Document.h $(XIO)Document.cc
+	$(GCC) -c -o $(IIO)Document.o $(XIO)Document.cc
 
-EditorCore.o: $(SRC)EditorCore.h $(SRC)EditorCore.cc
-	$(GCC) -c -o $(OBJ)EditorCore.o $(SRC)EditorCore.cc $(LINK)
+Editor.o: $(IINT)Editor.h $(XINT)Editor.cc
+	$(GCC) -c -o $(OBJ)Editor.o $(XINT)Editor.cc $(LINK)
 
-Editor.o: $(SRC)Editor.h $(SRC)Editor.cc
-	$(GCC) -c -o $(OBJ)Editor.o $(SRC)Editor.cc $(LINK)
-
-Menu.o: $(SRC)Menu.h $(SRC)Menu.cc
-	$(GCC) -c -o $(OBJ)Menu.o $(SRC)Menu.cc $(Link)
+Menu.o: $(IINT)Menu.h $(XINT)Menu.cc
+	$(GCC) -c -o $(OBJ)Menu.o $(XINT)Menu.cc $(Link)
 
 String.o: $(STR)String.cc $(STR)String.h
 	$(GCC) -c -o $(OBJ)String.o $(STR)String.cc

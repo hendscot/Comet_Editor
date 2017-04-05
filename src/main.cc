@@ -8,7 +8,7 @@ Last Update: Jan 31 2017
 
 int main (int argc, char* argv[]) {
   Comet::Editor* ed = new Comet::Editor();
-  ed->Load("./test.txt");
+  ed->Load(argv[1]);
   ed->Run();
   delete ed;
   return 1;
