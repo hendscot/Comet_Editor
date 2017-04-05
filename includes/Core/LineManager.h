@@ -4,18 +4,20 @@
 class String;
 namespace Comet {
     namespace Core {
-        class Line;                                                      // Forward declare line class
+        class Line;
         // BEGIN LineManager CLASS
         class LineManager {
-        typedef Line* LPTR;                                              // line pointer typedef
+        typedef Line* LPTR; 
         // BEGIN PUBLIC DATA
         public:
-            LineManager();                                               // no param constructor
-            ~LineManager();                                              // destructor
-            void Append(char);                                           // Append char to latest index
+            LineManager();
+            ~LineManager();
+
+            // PUBLIC METHODS
+            void Append(char);
             void Append(char, const int);
-            void DeleteChar(const int, const int);                                   // Delete char from target at line at target index
-            void InsertChar(const int, const int, char);                             // Insert char to target line at target index
+            void DeleteChar(const int, const int);
+            void InsertChar(const int, const int, char);
             void InsertBreak(const int, const int);
             int  GetLength (const int) const;
             int  GetLineCount () const;
@@ -26,16 +28,19 @@ namespace Comet {
 
         // BEGIN PRIVATE DATA
         private:
-            LPTR    l_strt;                                                 // Maintain first line
-            LPTR    l_end;
-            mutable                                                  // Maintain last line
-            LPTR    l_iter;                                                 // Used for iterating through list
-            void    Newline();                                              // create a new line at end of line list
-            void    InsertLineAfter(LPTR);                                  // insert a new line
+            // PRIVATE MEMBERS
+            LPTR    strt_;
+            LPTR    end_;
+            mutable
+            LPTR    iter_;
+
+            //PRIVATE METHODS
+            void    Newline();
+            void    InsertLineAfter(LPTR);
             void    InsertLineBefore(LPTR);
-            void    DeleteLine(LPTR);                                       // delete a given line
-            bool    NoLines();                                              // check if any lines exist
-            bool    Full(LPTR);                                             // check if line is at max defined capacity
+            void    DeleteLine(LPTR);
+            bool    NoLines();
+            bool    Full(LPTR);
             void    SelfDestruct ();
             int  ConcatLines  (LPTR);
         // END PRIVATE DATA

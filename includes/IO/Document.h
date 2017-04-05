@@ -1,7 +1,7 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
-#include "Line.h"
 namespace Comet {
+  namespace Core { class Line; }
   namespace IO {
     class Document {
       public:

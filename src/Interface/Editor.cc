@@ -1,4 +1,5 @@
 #include "../../includes/Interface/Editor.h"
+#include "../../includes/Core/EditorCore.h"
 // BEGIN NAMESPACE COMET
 namespace Comet {
   namespace Interface {

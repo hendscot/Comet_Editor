@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include "../../Includes/Core/Line.h"
+#include "../utils/Comet-String/String.h"
 // BEGIN NAMESPACE COMET
 namespace Comet {
     namespace Core {

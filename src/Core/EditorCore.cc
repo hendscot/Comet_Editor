@@ -108,7 +108,7 @@ namespace Comet {
 
     void EditorCore::DisplayToTerminal () {
       clear ();
-      lines_->DisplayToTerminal();
+      lines_->Display();
       refresh ();
     } // DisplayToTerminal ()
 

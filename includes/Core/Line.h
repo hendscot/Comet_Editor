@@ -1,9 +1,9 @@
 #ifndef LINE_H
 #define LINE_H
-#include "../utils/Comet-String/String.h"
 const int STR_SIZE = 80;                                   // line length is defined with a max of 80 chars
 // BEGIN COMET NAMESPACE
 namespace Comet {
+    Class String;
     namespace Core {
      // BEGIN LINE CLASS
         class Line {

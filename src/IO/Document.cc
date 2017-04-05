@@ -1,4 +1,5 @@
 #include <fstream>
+#include "../../includes/Core/Line.h"
 #include "../../includes/IO/Document.h"
 namespace Comet {
   namespace IO {
