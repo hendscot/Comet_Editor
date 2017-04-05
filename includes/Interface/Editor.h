@@ -1,9 +1,9 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-namespace Comet {
+namespace Ghost {
   namespace Core { class EditorCore ; }
   namespace Interface {
-    class Editor : public Comet::Core::EditorCore {
+    class Editor : public Ghost::Core::EditorCore {
     // BEGIN PUBLIC DATA
       public:
         // CONSTRUCTOR/DESTRUCTOR

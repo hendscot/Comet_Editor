@@ -1,7 +1,7 @@
 #include <fstream>
 #include "../../includes/Core/Line.h"
 #include "../../includes/IO/Document.h"
-namespace Comet {
+namespace Ghost {
   namespace IO {
     int Document::d_stat = 0;
     Comet::String* Document::d_buf  = NULL;
@@ -26,9 +26,9 @@ namespace Comet {
       return 1; // return status later
     }
 
-    bool Document::SaveDocument(const char* path, Comet::Core::Line* ln) {
+    bool Document::SaveDocument(const char* path, Ghost::Core::Line* ln) {
       std::ofstream fout(path);
-      Comet::Core::Line* temp = ln;
+      Ghost::Core::Line* temp = ln;
       do {
         fout.write(temp->str->GetBuff(), temp->str->Length());
         fout.write("\n", 2);

@@ -1,8 +1,8 @@
 #ifndef LineManager_H
 #define LineManager_H
-// BEGIN COMET NAMESPACE
+// BEGIN Ghost NAMESPACE
 class String;
-namespace Comet {
+namespace Ghost {
     namespace Core {
         class Line;
         // BEGIN LineManager CLASS
@@ -46,5 +46,5 @@ namespace Comet {
         // END PRIVATE DATA
         }; // END LineManager CLASS
     }
-} // END COMET NAMESPACE
+} // END Ghost NAMESPACE
 #endif //LineManager_H

@@ -1,6 +1,6 @@
 #ifndef EDITOR_CORE_H
 #define EDITOR_CORE_H
-namespace Comet {
+namespace Ghost {
     namespace Core {
         class LineManager;
         class EditorCore {

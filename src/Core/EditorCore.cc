@@ -3,7 +3,7 @@
 #include "../../includes/Core/EditorCore.h"
 #include "../../includes/Core/LineManager.h"
 #include "../../includes/IO/Document.h"
-namespace Comet {
+namespace Ghost {
   namespace Core {
     EditorCore::EditorCore()
     : shouldClose_(0), currLine_(0),
@@ -39,10 +39,10 @@ namespace Comet {
 
     void EditorCore::Load (const char* filepath) {
       path_ = filepath;
-      Comet::IO::Document::LoadDocument(path_);
-      int length = Comet::IO::Document::GetSize();
-      String str(Comet::IO::Document::GetBuffer());
-      Comet::IO::Document::CleanUp();
+      Ghost::IO::Document::LoadDocument(path_);
+      int length = Ghost::IO::Document::GetSize();
+      String str(Ghost::IO::Document::GetBuffer());
+      Ghost::IO::Document::CleanUp();
       for (int i = 0; i < length; i++){ 
         lines_->Append(str[i]);
       }
@@ -51,7 +51,7 @@ namespace Comet {
     }
 
     void EditorCore::Save () {
-      Comet::IO::Document::SaveDocument(path_, lines_->GetStart());
+      Ghost::IO::Document::SaveDocument(path_, lines_->GetStart());
     }
 
     // Method to acquire and handle user input

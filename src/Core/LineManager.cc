@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include "../../includes/Core/Line.h"
 #include "../../includes/Core/LineManager.h"
-namespace Comet {
+namespace Ghost {
 	namespace Core {
 		// No param constructor - intialize pointers, create new line
 		LineManager::LineManager() :

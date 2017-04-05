@@ -1,6 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
-namespace Comet {
+namespace Ghost {
     namespace Interface {
         class Menu {
             public:

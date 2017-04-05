@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include "../../includes/Interface/Menu.h"
 
-namespace Comet {
+namespace Ghost {
     namespace Interface {
         Menu::Menu () {
             PrintMenu ();

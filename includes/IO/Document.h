@@ -1,6 +1,6 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
-namespace Comet {
+namespace Ghost {
   namespace Core { class Line; }
   namespace IO {
     class Document {
@@ -9,7 +9,7 @@ namespace Comet {
         static
         bool         LoadDocument    (const char*);
         static
-        bool         SaveDocument    (const char*, Comet::Core::Line*);
+        bool         SaveDocument    (const char*, Ghost::Core::Line*);
         // PUBLIC ACCESSORS
         static
         unsigned       GetSize       ();

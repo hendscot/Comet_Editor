@@ -1,7 +1,7 @@
 #include "../../includes/Interface/Editor.h"
 #include "../../includes/Core/EditorCore.h"
-// BEGIN NAMESPACE COMET
-namespace Comet {
+// BEGIN NAMESPACE Ghost
+namespace Ghost {
   namespace Interface {
     // Constructing a new Editor
     Editor::Editor() {
@@ -35,4 +35,4 @@ namespace Comet {
       }
     } // SHOULDCLOSE ()
   }
-} // END NAMESPACE COMET
+} // END NAMESPACE Ghost

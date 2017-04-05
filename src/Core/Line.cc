@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include "../../Includes/Core/Line.h"
 #include "../utils/Comet-String/String.h"
-// BEGIN NAMESPACE COMET
-namespace Comet {
+// BEGIN NAMESPACE Ghost
+namespace Ghost {
     namespace Core {
         // init static lineAmnt var
         unsigned Line::lineAmnt = 0;                               // maintains number of existing line nodes
@@ -42,4 +42,4 @@ namespace Comet {
             return (Length() - 1);
         }
     }
-} // END NAMESPACE COMET
+} // END NAMESPACE Ghost
