@@ -1,5 +1,5 @@
 #include <fstream>
-#include "Document.h"
+#include "../../includes/IO/Document.h"
 namespace Comet {
   namespace IO {
     int Document::d_stat = 0;
@@ -12,11 +12,12 @@ namespace Comet {
     }
 
     bool Document::LoadDocument(const char* path) {
-      std::ifstream fin(path);
+      std::ifstream fin(path, std::ifstream::binary);
       fin.seekg(0, std::ios::end);
       int docLen = fin.tellg();
       fin.seekg(0, std::ios::beg);
-      char* buffer = new char [docLen];
+      char* buffer = new char [docLen + 1];
+      buffer[docLen] = '\0';
       fin.read(buffer, docLen);
       fin.close();
       d_buf  = new Comet::String(buffer);

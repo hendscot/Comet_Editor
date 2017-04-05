@@ -1,5 +1,5 @@
-#include "Line.h"
 #include <cstdlib>
+#include "../../Includes/Core/Line.h"
 // BEGIN NAMESPACE COMET
 namespace Comet {
     namespace Core {
