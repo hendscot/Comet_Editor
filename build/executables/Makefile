@@ -1,13 +1,14 @@
 GCC = g++ -std=c++11
 SRC = ../../src/
 UTILS = ../../utils/
+STR   = ../../utils/Comet-String/
 OBJ = ../objects/
 EXE = ../executables/
 LINK = -lncurses
 
 all: main
 
-main: FileHandler.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
+main: FileHandler.o Menu.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main.o
 	$(GCC) -o $(EXE)main $(OBJ)String.o $(OBJ)FileHandler.o $(OBJ)Menu.o $(OBJ)LineManager.o $(OBJ)Line.o $(OBJ)Document.o $(OBJ)EditorCore.o $(OBJ)Editor.o $(OBJ)main.o $(LINK)
 
 FileHandler.o: $(UTILS)FileHandler.cc $(UTILS)FileHandler.h
@@ -31,8 +32,8 @@ Editor.o: $(SRC)Editor.h $(SRC)Editor.cc
 Menu.o: $(SRC)Menu.h $(SRC)Menu.cc
 	$(GCC) -c -o $(OBJ)Menu.o $(SRC)Menu.cc $(Link)
 
-String.o: $(UTILS)String.cc $(UTILS)String.h
-	$(GCC) -c -o $(OBJ)String.o $(UTILS)String.cc
+String.o: $(STR)String.cc $(STR)String.h
+	$(GCC) -c -o $(OBJ)String.o $(STR)String.cc
 
 main.o: $(SRC)main.cc
 	$(GCC) -c -o $(OBJ)main.o $(SRC)main.cc

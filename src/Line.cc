@@ -13,7 +13,6 @@ namespace Comet {
         prev = NULL;                                           // set pointer to previous line node to NULL
         newL = false;                                          // set state of line to false
         ++lineAmnt;                                            // creating a line node so increase line node total
-        lineNO = lineAmnt;                                     // current line number is equal to total lines
         currIn = 0;                                            // line is new so latest index is 0
         size = 0;                                              // line is new so size is 0;
         str = new Comet::String(STR_SIZE);                     // allocate new string with space of str max length
@@ -24,7 +23,6 @@ namespace Comet {
         next = NULL;
         prev = NULL;
         ++lineAmnt;
-        lineNO = lineAmnt;
         currIn = 0;
     } // Line (const Line&)
 
@@ -32,5 +30,14 @@ namespace Comet {
     Line::~Line () {
         --lineAmnt;                                            // removing line so decrease line amount
         delete str;                                            // destroy string data
-    } // Line ()
+    } // Line ()    
+    
+    int Line::Length () {
+        return str->Length();
+    }
+
+    int Line::End () {
+        return (Length() - 1);
+    }
+
 } // END NAMESPACE COMET

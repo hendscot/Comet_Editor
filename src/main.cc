@@ -1,10 +1,14 @@
+/************************************************
+COMET GHOST TEXT EDITOR Ver. 0.0.1
+Written by: Scott Henderson
+Last Update: Jan 31 2017
+*************************************************/
 #include <iostream>
 #include "Editor.h"
-#include "LineMan.h"
-#include "Document.h"
 
 int main (int argc, char* argv[]) {
-  Comet::Editor* ed = new Comet::Editor(argv[1]);
+  Comet::Editor* ed = new Comet::Editor();
+  ed->Load("./test.txt");
   ed->Run();
   delete ed;
   return 1;

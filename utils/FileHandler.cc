@@ -1,27 +1,33 @@
 #include "FileHandler.h"
-#include <iostream>
-
-
+#include "../src/LineManager.h"
+#include <fstream>
 
 FileHandler::FileHandler() {
-  FH_doc = NULL;
-  FH_docLen = 0;
 }
 
 FileHandler::~FileHandler() {
+  delete buffer;
 }
 
 char* FileHandler::Read (const char* path) {
-  FH_doc = fopen (path, "rt");
-  if (FH_doc == NULL) perror("ERROR"); // TODO handle if file not opened
-  fseek (FH_doc, 0, SEEK_END);
-  FH_docLen = ftell (FH_doc);
-  rewind (FH_doc);
-  buffer = new char [sizeof(char) * FH_docLen];
-  if (!buffer) ; // TODO: handle if memory not alloc
-  fread (buffer, 1, FH_docLen, FH_doc); // TODO store return code in var
-  fclose(FH_doc);
+  std::ifstream fin(path);
+  fin.seekg(0, std::ios::end);
+  docLen = fin.tellg();
+  fin.seekg(0, std::ios::beg);
+  buffer = new char [docLen];
+  fin.read(buffer, docLen);
+  fin.close();
   return buffer;
+}
+
+void FileHandler::Write (const char* path, const LineManager&* doc) {
+  std::ofstream fout(path);
+  int lines = doc->GetLineCount ();
+  LPTR* temp = doc->l_strt;
+  for (int i = 0; i < lines; i++, temp = temp->next) {
+    fout.write(temp->str->GetBuff(), temp->str->Length());
+  }
+  fout.close();
 }
 
 unsigned FileHandler::GetLength(){

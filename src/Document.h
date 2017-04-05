@@ -1,22 +1,20 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
-class FileHandler;
+class LineManager;
 class Document {
 public:
-  Document  ();
-  ~Document ();
-  void LoadDocument(const char*);
-  char* buffer;
+  Document                                         ();
+  ~Document                                        ();
+  bool LoadDocument                                (const char*);
+  bool SaveDocument                                (const LineManager&);
+  Comet::String*                                   buffer;
 
-  unsigned GetSize();
+  // PUBLIC ACCESSORS
+  unsigned                                         GetSize();
 
 private:
-  FileHandler* FH;
-  unsigned bufSize;
+  const char*                                      doc_path;
+  unsigned                                         bufSize;
+  int                                              status;
 };
-
-
-
-
-
 #endif // DOCUMENT_H
