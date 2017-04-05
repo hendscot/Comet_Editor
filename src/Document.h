@@ -9,7 +9,7 @@ namespace Comet {
         static
         bool         LoadDocument    (const char*);
         static
-        bool         SaveDocument    (const char*, Comet::Line*);
+        bool         SaveDocument    (const char*, Comet::Core::Line*);
         // PUBLIC ACCESSORS
         static
         unsigned       GetSize       ();
@@ -19,8 +19,8 @@ namespace Comet {
         void           CleanUp       ();
       private:
         Document                     ();
-        int            d_stat;
-        Comet::String* d_buf;
+        static int            d_stat;
+        static Comet::String* d_buf;
     };
   }
 }

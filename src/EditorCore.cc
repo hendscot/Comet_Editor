@@ -1,11 +1,13 @@
 #include <ncurses.h>
-#include "String.h"
+#include "../utils/Comet-String/String.h"
 #include "EditorCore.h"
+#include "Document.h"
 namespace Comet {
   namespace Core {
     EditorCore::EditorCore()
-    : e_shouldClose(0), e_currLine(0)
-      e_currIndex(E_BEG), e_man = new LineManager {
+    : e_shouldClose(0), e_currLine(0),
+      e_currIndex(E_BEG) {
+      e_man = new LineManager;
       this->InitGUIOptions   ();                         // Initalize members and ncurses
     } // EDITOR (CHAR*)
 
@@ -44,7 +46,7 @@ namespace Comet {
     }
 
     void EditorCore::Save () {
-      Comet::IO::Document::SaveDocument(e_man->GetStart());
+      Comet::IO::Document::SaveDocument(e_path, e_man->GetStart());
     }
 
   // Method to acquire and handle user input
@@ -63,7 +65,7 @@ namespace Comet {
           break;
         }
         case KEY_DOWN: {                             // if down arrow key
-          if ((e_currLine + 1) < e_man->GetLineCount () - 1) {
+          if ((e_currLine + 1) < e_man->GetLineCount ()) {
               if (e_currIndex >= e_man->GetLength(e_currLine + 1) + E_BEG) {
                   move (++e_currLine, (e_currIndex = (e_man->GetLength(e_currLine + 1) + E_BEG)));          // move cursor down one line
               }
@@ -95,7 +97,7 @@ namespace Comet {
             move (e_currLine, ++e_currIndex);          // move cursor right one index
           }
           else {
-            if ((e_currLine + 1) < (e_man->GetLineCount() - 1)) move (++e_currLine, e_currIndex = E_BEG);
+            if ((e_currLine + 1) < (e_man->GetLineCount())) move (++e_currLine, e_currIndex = E_BEG);
           }
           break;
         }
@@ -111,7 +113,7 @@ namespace Comet {
           else {
             if (e_currIndex > E_BEG) {
               move (e_currLine, --e_currIndex);          // move cursor left one index
-            }          
+            }
           }
           break;
         }
@@ -170,5 +172,5 @@ namespace Comet {
         e_man->Display();
         refresh ();
     } // DISPLAY ()
-  } 
+  }
 }

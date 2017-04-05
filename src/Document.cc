@@ -2,8 +2,8 @@
 #include "Document.h"
 namespace Comet {
   namespace IO {
-    Document::d_stat = 0;
-    Document::d_buf  = NULL;
+    int Document::d_stat = 0;
+    Comet::String* Document::d_buf  = NULL;
 
     Document::Document() {
     }
@@ -21,13 +21,12 @@ namespace Comet {
       fin.close();
       d_buf  = new Comet::String(buffer);
       delete buffer;
-      d_len  = buffer->Length();
       return 1; // return status later
     }
 
-    bool Document::SaveDocument(const char* path, Comet::Line* ln) {
+    bool Document::SaveDocument(const char* path, Comet::Core::Line* ln) {
       std::ofstream fout(path);
-      Comet::Line* temp = ln;
+      Comet::Core::Line* temp = ln;
       do {
         fout.write(temp->str->GetBuff(), temp->str->Length());
         fout.write("\n", 2);
@@ -42,7 +41,7 @@ namespace Comet {
     }
 
     const char* Document::GetBuffer() {
-      return d_buf;
+      return d_buf->GetBuff();
     }
 
     void Document::CleanUp() {

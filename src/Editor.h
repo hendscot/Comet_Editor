@@ -2,7 +2,7 @@
 #define EDITOR_H
 #include "EditorCore.h"
 namespace Comet {
-  class Editor : public EditorCore {
+  class Editor : public Comet::Core::EditorCore {
   // BEGIN PUBLIC DATA
   public:
     // CONSTRUCTOR/DESTRUCTOR
