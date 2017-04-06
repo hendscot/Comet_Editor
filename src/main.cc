@@ -6,7 +6,7 @@ Written by: Scott Henderson
 #include "../includes/Interface/Editor.h"
 
 int main (int argc, char* argv[]) {
-  Comet::Editor* ed = new Comet::Editor();
+  Ghost::Interface::Editor* ed = new Ghost::Interface::Editor();
   ed->Load(argv[1]);
   ed->Run();
   delete ed;

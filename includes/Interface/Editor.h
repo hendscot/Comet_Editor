@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
+#include "../../includes/Core/EditorCore.h"
 namespace Ghost {
-  namespace Core { class EditorCore ; }
   namespace Interface {
     class Editor : public Ghost::Core::EditorCore {
     // BEGIN PUBLIC DATA

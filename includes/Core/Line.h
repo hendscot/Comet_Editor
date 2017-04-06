@@ -2,8 +2,8 @@
 #define LINE_H
 const int STR_SIZE = 80;                                   // line length is defined with a max of 80 chars
 // BEGIN Ghost NAMESPACE
+#include "../../utils/Comet-String/String.h"
 namespace Ghost {
-    Class String;
     namespace Core {
      // BEGIN LINE CLASS
         class Line {
@@ -20,7 +20,7 @@ namespace Ghost {
 
         Line*                          next;               // pointer to address of next line
         Line*                          prev;               // pointer to address of previous line
-        Ghost::String*                 str;                // line data is maintained as type Comet::String
+        Comet::String*                 str;                // line data is maintained as type Comet::String
         // BEGIN PRIVATE DATA
         private:
             bool                           newL;               // stores state of line (contains a newline or not)

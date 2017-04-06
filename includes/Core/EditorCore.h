@@ -1,5 +1,6 @@
 #ifndef EDITOR_CORE_H
 #define EDITOR_CORE_H
+#include <ncurses.h>
 namespace Ghost {
     namespace Core {
         class LineManager;
@@ -9,12 +10,12 @@ namespace Ghost {
                 EditorCore  ();
                 ~EditorCore ();
                 // PUBLIC METHODS
-                void         Load              (const char*);  
+                void         Load              (const char*);
                 void         Save              ();
             // BEGIN PROTECTED
             protected:
                 // PROTECTED MEMBERS
-                bool         shouldClose; 
+                bool         shouldClose_;
                 // PROTECTED METHODS
                 void         InitGuiOptions    ();
                 void         Poll              ();
@@ -28,16 +29,10 @@ namespace Ghost {
                 LineManager* lines_;
                 // PRIVATE CONSTANTS
                 const int    LINE_OFFSET   = 0x02;
-                const int    ENTER         = 0x0A;
-                const int    TAB           = 0x09;
+                #define    ENTER          0x0A
+                #define   TAB           0x09
                 const int    SPACE         = 0x20;
                 const int    TAB_SIZE      = 0x04;
-                const int    UP            = KEY_UP;
-                const int    DOWN          = KEY_DOWN;
-                const int    LEFT          = KEY_LEFT;
-                const int    RIGHT         = KEY_RIGHT;
-                const int    SAVE          = KEY_SLEFT;
-                const int    BACKSPACE     = KEY_BACKSPACE;
                 // PRIVATE METHODS
                 void         DisplayToTerminal ();
                 void         HandleKeyInput    ();

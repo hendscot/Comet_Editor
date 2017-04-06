@@ -1,13 +1,12 @@
 #include <cstdlib>
-#include "../../Includes/Core/Line.h"
-#include "../utils/Comet-String/String.h"
+#include "../../includes/Core/Line.h"
 // BEGIN NAMESPACE Ghost
 namespace Ghost {
     namespace Core {
         // init static lineAmnt var
         unsigned Line::lineAmnt = 0;                               // maintains number of existing line nodes
 
-        // TODO add insert etc... methods to prevent direct string access 
+        // TODO add insert etc... methods to prevent direct string access
 
         // No param constructor
         Line::Line() {
@@ -32,8 +31,8 @@ namespace Ghost {
         Line::~Line () {
             --lineAmnt;                                            // removing line so decrease line amount
             delete str;                                            // destroy string data
-        } // Line ()    
-        
+        } // Line ()
+
         int Line::Length () {
             return str->Length();
         }

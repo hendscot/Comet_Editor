@@ -1,5 +1,6 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
+#include "../../utils/Comet-String/String.h"
 namespace Ghost {
   namespace Core { class Line; }
   namespace IO {

@@ -1,11 +1,9 @@
 #include "../../includes/Interface/Editor.h"
-#include "../../includes/Core/EditorCore.h"
 // BEGIN NAMESPACE Ghost
 namespace Ghost {
   namespace Interface {
     // Constructing a new Editor
     Editor::Editor() {
-      InitGUIOptions ();
     } // EDITOR (CHAR*)
 
     // Deconstruct Editor
@@ -27,7 +25,7 @@ namespace Ghost {
 
     // return state of Editor (should or shouldn't close)
     bool Editor::ShouldClose() {
-      if (e_shouldClose) {                                     // return true if state is should close
+      if (shouldClose_) {                                     // return true if state is should close
         return 1;
       }
       else {                                                   // else return 0 (shouldn't close)

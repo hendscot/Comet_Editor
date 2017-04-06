@@ -13,7 +13,7 @@ namespace Ghost {
     }
 
     bool Document::LoadDocument(const char* path) {
-      std::ifstream fin(path, std::ifstream::binary);
+      std::ifstream fin(path);
       fin.seekg(0, std::ios::end);
       int docLen = fin.tellg();
       fin.seekg(0, std::ios::beg);
