@@ -1,19 +1,17 @@
-#ifndef EDITOR_CORE_H
-#define EDITOR_CORE_H
-#include <ncurses.h>
+#ifndef GHOST_EDITOR_CORE_H
+#define GHOST_EDITOR_CORE_H
 namespace Ghost {
     namespace Core {
         class LineManager;
-        class EditorCore {
-            public:
+        class GhostEditorCore {
+            // BEGIN PROTECTED
+            protected:
                 // SPECIALS
-                EditorCore  ();
-                ~EditorCore ();
+                GhostEditorCore  ();
+                ~GhostEditorCore ();
                 // PUBLIC METHODS
                 void         Load              (const char*);
                 void         Save              ();
-            // BEGIN PROTECTED
-            protected:
                 // PROTECTED MEMBERS
                 bool         shouldClose_;
                 // PROTECTED METHODS
@@ -28,9 +26,9 @@ namespace Ghost {
                 int          currIndex_;
                 LineManager* lines_;
                 // PRIVATE CONSTANTS
+                #define      ENTER           0x0A
+                #define      TAB             0x09
                 const int    LINE_OFFSET   = 0x02;
-                #define    ENTER          0x0A
-                #define   TAB           0x09
                 const int    SPACE         = 0x20;
                 const int    TAB_SIZE      = 0x04;
                 // PRIVATE METHODS

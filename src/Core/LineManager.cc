@@ -1,5 +1,5 @@
 #include <cstddef>
-#include <ncurses.h>
+#include <iostream>
 #include "../../includes/Core/Line.h"
 #include "../../includes/Core/LineManager.h"
 namespace Ghost {
@@ -240,11 +240,14 @@ namespace Ghost {
 			unsigned lineno = 1;
 			do {
 			// test if this will work?
-			printw("%u ", lineno);
+			/*printw("%u ", lineno);
 			printw("%s", iter_->str->GetBuff());
 			printw("\n");
-			iter_ = iter_->next;
+			iter_ = iter_->next;*/
+			std::cout << lineno << " ";
+			std::cout << iter_->str->GetBuff() << std::endl;
 			++lineno;
+			iter_ = iter_->next;
 			} while (iter_ != strt_ && iter_ != NULL);
 		}
 		} // DISPLAY ()
