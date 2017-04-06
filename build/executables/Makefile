@@ -1,6 +1,6 @@
 GCC   = g++ -std=c++11
 DEBUG = -g
-SRC   = ../../src
+SRC   = ../../src/
 XCORE = ../../src/Core/
 XINT  = ../../src/Interface/
 XIO   = ../../src/IO/
@@ -20,14 +20,14 @@ main: Menu.o LineManager.o Line.o Document.o EditorCore.o Editor.o String.o main
 LineManager.o: $(ICORE)LineManager.h $(XCORE)LineManager.cc
 	$(GCC) -c -o $(OBJ)LineManager.o $(XCORE)LineManager.cc
 
-Line.o: $(ICORE))Line.h $(XCORE)Line.cc
+Line.o: $(ICORE)Line.h $(XCORE)Line.cc
 	$(GCC) -c -o $(OBJ)Line.o $(XCORE)Line.cc
 
 EditorCore.o: $(ICORE)EditorCore.h $(XCORE)EditorCore.cc
 	$(GCC) -c -o $(OBJ)EditorCore.o $(XCORE)EditorCore.cc $(LINK)
 
 Document.o: $(IIO)Document.h $(XIO)Document.cc
-	$(GCC) -c -o $(IIO)Document.o $(XIO)Document.cc
+	$(GCC) -c -o $(OBJ)Document.o $(XIO)Document.cc
 
 Editor.o: $(IINT)Editor.h $(XINT)Editor.cc
 	$(GCC) -c -o $(OBJ)Editor.o $(XINT)Editor.cc $(LINK)

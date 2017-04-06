@@ -1,25 +1,25 @@
 #include <ncurses.h>
 #include "../../utils/Comet-String/String.h"
-#include "../../includes/Core/EditorCore.h"
+#include "../../includes/Core/GhostEditorCore.h"
 #include "../../includes/Core/LineManager.h"
 #include "../../includes/IO/Document.h"
 namespace Ghost {
   namespace Core {
-    EditorCore::EditorCore()
+    GhostEditorCore::GhostEditorCore()
     : shouldClose_(0), currLine_(0),
-      currIndex_(LINE_OFFSET) {
+      currIndex_(LINE_OFFSET + 1) {
       lines_ = new LineManager;
-      this->InitGUIOptions   ();
+      this->InitGuiOptions   ();
     } // EDITOR (CHAR*)
 
     // Deconstruct Editor
-    EditorCore::~EditorCore() {
+    GhostEditorCore::~GhostEditorCore() {
       delete lines_;
       endwin();
     } // ~EDITOR ()
 
     // Initialize ncurses DisplayToTerminal options
-    void EditorCore::InitGuiOptions () {
+    void GhostEditorCore::InitGuiOptions () {
       // setup screen
       initscr             ();
       // no buffer!
@@ -33,52 +33,52 @@ namespace Ghost {
       attron(COLOR_PAIR(1));
     } // INIT ()
 
-    void EditorCore::Poll () {
+    void GhostEditorCore::Poll () {
         HandleKeyInput ();
     }
 
-    void EditorCore::Load (const char* filepath) {
+    void GhostEditorCore::Load (const char* filepath) {
       path_ = filepath;
       Ghost::IO::Document::LoadDocument(path_);
       int length = Ghost::IO::Document::GetSize();
-      String str(Ghost::IO::Document::GetBuffer());
+      Comet::String str(Ghost::IO::Document::GetBuffer());
       Ghost::IO::Document::CleanUp();
-      for (int i = 0; i < length; i++){ 
+      for (int i = 0; i < length; i++){
         lines_->Append(str[i]);
       }
       this->DisplayToTerminal ();
       move (0, LINE_OFFSET);
     }
 
-    void EditorCore::Save () {
+    void GhostEditorCore::Save () {
       Ghost::IO::Document::SaveDocument(path_, lines_->GetStart());
     }
 
     // Method to acquire and handle user input
-    void EditorCore::HandleKeyInput () {
-      key_ = getch();                               
+    void GhostEditorCore::HandleKeyInput () {
+      key_ = getch();
       switch (key_) {
-        case UP: {
-          CursorUp ();
+        case KEY_UP: {
+          MoveCursorUp ();
           break;
         }
-        case DOWN: {
-          CursorDown ();
+        case KEY_DOWN: {
+          MoveCursorDown ();
           break;
         }
-        case LEFT: {
-          CursorLeft ();
+        case KEY_LEFT: {
+          MoveCursorLeft ();
           break;
         }
-        case RIGHT: {
-          CursorRight ();
+        case KEY_RIGHT: {
+          MoveCursorRight ();
           break;
         }
         case TAB: {
           InsertTab ();
           break;
         }
-        case BACKSPACE: {
+        case KEY_BACKSPACE: {
           RemoveCharacter ();
           break;
         }
@@ -86,7 +86,7 @@ namespace Ghost {
           InsertNewline ();
           break;
         }
-        case SAVE: {
+        case KEY_SLEFT: {
           Save();
           break;
         }
@@ -98,21 +98,21 @@ namespace Ghost {
     } // HandleKeyInput ()
 
       // Delete current index of current line TODO
-    void EditorCore::Delete (int ln, int in) {
+    void GhostEditorCore::Delete (int ln, int in) {
       lines_->DeleteChar(ln, (in - LINE_OFFSET));
     } // DELETE (INT, INT)
 
-    void EditorCore::Insert (int line, int indx, char ch) {
+    void GhostEditorCore::Insert (int line, int indx, char ch) {
       lines_->InsertChar(line, (indx - LINE_OFFSET), ch);
     }
 
-    void EditorCore::DisplayToTerminal () {
+    void GhostEditorCore::DisplayToTerminal () {
       clear ();
       lines_->Display();
       refresh ();
     } // DisplayToTerminal ()
 
-    void EditorCore::CursorUp () {
+    void GhostEditorCore::MoveCursorUp () {
         if (currLine_ > 0) {
         if ((lines_->GetLength(currLine_ - 1) + LINE_OFFSET) < currIndex_) {
          move (currLine_ -= 1, currIndex_ = (lines_->GetLength(currLine_ - 1) + LINE_OFFSET));
@@ -123,7 +123,7 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::CursorDown () {
+    void GhostEditorCore::MoveCursorDown () {
         if ((currLine_ + 1) < lines_->GetLineCount ()) {
         if (currIndex_ >= lines_->GetLength(currLine_ + 1) + LINE_OFFSET) {
           move (++currLine_, (currIndex_ = (lines_->GetLength(currLine_ + 1) + LINE_OFFSET)));          // move cursor down one line
@@ -134,7 +134,7 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::CursorLeft () {
+    void GhostEditorCore::MoveCursorLeft () {
       if (currLine_ > 0) {
         if (currIndex_ > LINE_OFFSET) {
           move (currLine_, --currIndex_);
@@ -150,7 +150,7 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::CursorRight () {
+    void GhostEditorCore::MoveCursorRight () {
       if ((currIndex_) < lines_->GetLength(currLine_) + LINE_OFFSET) {
         move (currLine_, ++currIndex_);
       }
@@ -161,7 +161,7 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::RemoveCharacter () {
+    void GhostEditorCore::RemoveCharacter () {
       if ((currIndex_) > LINE_OFFSET) {
         Delete(currLine_, currIndex_);
         this->DisplayToTerminal();
@@ -175,7 +175,7 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::InsertCharacter () {
+    void GhostEditorCore::InsertCharacter () {
       if (currIndex_ < (lines_->GetLength(currLine_) + LINE_OFFSET)) {
         Insert(currLine_, currIndex_, key_);
         this->DisplayToTerminal();
@@ -188,21 +188,21 @@ namespace Ghost {
       }
     }
 
-    void EditorCore::InsertNewline () {
+    void GhostEditorCore::InsertNewline () {
       lines_->InsertBreak(currLine_, currIndex_ - LINE_OFFSET);
       this->DisplayToTerminal();
       move (++currLine_, (currIndex_ = LINE_OFFSET));
     }
 
-    void EditorCore::InsertTab () {
+    void GhostEditorCore::InsertTab () {
       if (currIndex_ < lines_->GetLength(currLine_) + LINE_OFFSET) {
         for (int i = 0; i < TAB_SIZE; i++) {
-          Insert(currLine_, currIndex_++, E_SPACE);
+          Insert(currLine_, currIndex_++, SPACE);
         }
       }
       else {
         for (int i = 0; i < TAB_SIZE; i++) {
-          lines_->Append(E_SPACE, currLine_);
+          lines_->Append(SPACE, currLine_);
           ++currIndex_;
         }
       }

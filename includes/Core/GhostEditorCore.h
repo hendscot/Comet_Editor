@@ -1,20 +1,19 @@
-#ifndef EDITOR_CORE_H
-#define EDITOR_CORE_H
+#ifndef GHOST_EDITOR_CORE_H
+#define GHOST_EDITOR_CORE_H
 namespace Ghost {
     namespace Core {
         class LineManager;
-        class EditorCore {
-            public:
-                // SPECIALS
-                EditorCore  ();
-                ~EditorCore ();
-                // PUBLIC METHODS
-                void         Load              (const char*);  
-                void         Save              ();
+        class GhostEditorCore {
             // BEGIN PROTECTED
             protected:
+                // SPECIALS
+                GhostEditorCore  ();
+                ~GhostEditorCore ();
+                // PUBLIC METHODS
+                void         Load              (const char*);
+                void         Save              ();
                 // PROTECTED MEMBERS
-                bool         shouldClose; 
+                bool         shouldClose_;
                 // PROTECTED METHODS
                 void         InitGuiOptions    ();
                 void         Poll              ();
@@ -27,17 +26,11 @@ namespace Ghost {
                 int          currIndex_;
                 LineManager* lines_;
                 // PRIVATE CONSTANTS
+                #define      ENTER           0x0A
+                #define      TAB             0x09
                 const int    LINE_OFFSET   = 0x02;
-                const int    ENTER         = 0x0A;
-                const int    TAB           = 0x09;
                 const int    SPACE         = 0x20;
                 const int    TAB_SIZE      = 0x04;
-                const int    UP            = KEY_UP;
-                const int    DOWN          = KEY_DOWN;
-                const int    LEFT          = KEY_LEFT;
-                const int    RIGHT         = KEY_RIGHT;
-                const int    SAVE          = KEY_SLEFT;
-                const int    BACKSPACE     = KEY_BACKSPACE;
                 // PRIVATE METHODS
                 void         DisplayToTerminal ();
                 void         HandleKeyInput    ();

@@ -14,15 +14,15 @@ namespace Ghost {
 
     bool Document::LoadDocument(const char* path) {
       std::ifstream fin(path, std::ifstream::binary);
-      fin.seekg(0, std::ios::end);
-      int docLen = fin.tellg();
-      fin.seekg(0, std::ios::beg);
-      char* buffer = new char [docLen + 1];
-      buffer[docLen] = '\0';
-      fin.read(buffer, docLen);
+      std::filebuf*  fbuf = fin.rdbuf();
+      std::size_t fsize = fbuf->pubseekoff (0, fin.end, fin.in);
+      fbuf->pubseekpos(0, fin.in);
+      char* buf = new char [fsize + 1];
+      buf[fsize] = '\0';
+      fbuf->sgetn (buf, fsize);
       fin.close();
-      d_buf  = new Comet::String(buffer);
-      delete buffer;
+      d_buf = new Comet::String(buf);
+      delete [] buf;
       return 1; // return status later
     }
 

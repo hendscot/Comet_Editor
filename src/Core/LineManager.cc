@@ -1,12 +1,12 @@
 #include <cstddef>
-#include <ncurses.h>
+#include <iostream>
 #include "../../includes/Core/Line.h"
 #include "../../includes/Core/LineManager.h"
 namespace Ghost {
 	namespace Core {
 		// No param constructor - intialize pointers, create new line
 		LineManager::LineManager() :
-		 strt_ = NULL, end_ = NULL  {
+		 strt_(NULL), end_(NULL)  {
 			Newline();
 		}
 		// Destructor, calls self destruct method
@@ -16,7 +16,7 @@ namespace Ghost {
 		// creates a new Line node in sequence (appends to end of list)
 		void LineManager::Newline() {
 			LPTR newL = new Line;
-			if (NoLines()) { 
+			if (NoLines()) {
 				strt_ = end_ = newL;
 				strt_->next = end_;
 				strt_->prev = end_;
@@ -25,7 +25,7 @@ namespace Ghost {
 				iter_ = end_;
 				end_ = newL;
 				iter_->next = end_;
-				end_->prev = iter_; 
+				end_->prev = iter_;
 				end_->next = strt_;
 				strt_->prev = end_;
 			}
@@ -60,7 +60,7 @@ namespace Ghost {
 			}
 			else {
 				// we must be in the middle so just rearrange pointers...
-				LPTR newL               = new Line;					    
+				LPTR newL               = new Line;
 				newL->prev              = LN;
 				newL->next              = LN->next;
 				newL->next->prev        = newL;
@@ -71,9 +71,9 @@ namespace Ghost {
 		void LineManager::InsertChar(const int ln, const int in, char ch) {
 			int i;
 			// iterate lines from beginning
-			iter_ = strt_;                          
+			iter_ = strt_;
 			// iterate while not at target line
-			for (i = 0; i < ln; iter_ = iter_->next, i++);     					  
+			for (i = 0; i < ln; iter_ = iter_->next, i++);
 			if (i == ln) {
 				iter_->str->Insert(in, ch);
 				++iter_->size;
@@ -87,7 +87,7 @@ namespace Ghost {
 			for (i = 0; i < ln; iter_ = iter_->next, i++);
 			if (i == ln) {
 				// if not at end of line will have to move remaining
-				if (in <= (iter_->End())) {                                             
+				if (in <= (iter_->End())) {
 					InsertLineAfter(iter_);
 					iter_ = iter_->next;
 					iter_->str->Append(iter_->prev->str->Substr(in, (iter_->prev->End() - in) + 1));
@@ -240,17 +240,20 @@ namespace Ghost {
 			unsigned lineno = 1;
 			do {
 			// test if this will work?
-			printw("%u ", lineno);
+			/*printw("%u ", lineno);
 			printw("%s", iter_->str->GetBuff());
 			printw("\n");
-			iter_ = iter_->next;
+			iter_ = iter_->next;*/
+			std::cout << lineno << " ";
+			std::cout << iter_->str->GetBuff() << std::endl;
 			++lineno;
+			iter_ = iter_->next;
 			} while (iter_ != strt_ && iter_ != NULL);
 		}
 		} // DISPLAY ()
 
 		Line* LineManager::GetStart () const {
-			LPTR* tstrt = strt_;
+			LPTR tstrt = strt_;
 			return tstrt;
 		}
 	}
