@@ -31,7 +31,7 @@ namespace Ghost {
       Ghost::Core::Line* temp = ln;
       do {
         fout.write(temp->str->GetBuff(), temp->str->Length());
-        fout.write("\n", 2);
+        fout.write("\n", 1);
         temp = temp->next;
       } while (temp != ln);
       fout.close();
