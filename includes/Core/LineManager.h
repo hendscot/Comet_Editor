@@ -7,9 +7,9 @@ namespace Ghost {
         class Line;
         // BEGIN LineManager CLASS
         class LineManager {
-        typedef Line* LPTR; 
         // BEGIN PUBLIC DATA
         public:
+            typedef Line* LPTR; 
             LineManager();
             ~LineManager();
 
